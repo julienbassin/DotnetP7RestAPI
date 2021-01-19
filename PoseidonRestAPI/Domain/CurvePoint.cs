@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace Dot.Net.WebApi.Domain
+namespace PoseidonRestAPI.Domain
 {
     public class CurvePoint
     {

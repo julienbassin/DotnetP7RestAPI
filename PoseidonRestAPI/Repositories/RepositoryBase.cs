@@ -2,29 +2,29 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using PoseidonRestAPI.Data;
+using System.Linq.Expressions;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public class RepositoryBase<TEntity>  where TEntity : class
     {
-        protected readonly LocalDbContext _context;
-        private DbSet<T> _entities;
+        public readonly LocalDbContext _context;
         string errorMessage = string.Empty;
 
         public RepositoryBase(LocalDbContext context)
         {
             _context = context;
-            _entities = context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual TEntity[] GetAll()
         {
-            return _entities.AsEnumerable();
+            return _context.Set<TEntity>().ToArray();
         }
 
-        public T GetById(int Id)
+        public TEntity GetById(Expression<<>>)
         {
+            //use predicate
             return _entities.SingleOrDefault(s => s.Id == Id);
         }
 
@@ -35,11 +35,11 @@ namespace PoseidonRestAPI.Repositories
                 throw new ArgumentException("Entity");
             }
 
-            _entities.Add(entity);
+            _context.Add(entity);
             _context.SaveChanges();
         }
 
-        public void Update(T entity)
+        public void Update(TEntity entity)
         {
             if (entity == null)
             {
@@ -61,12 +61,12 @@ namespace PoseidonRestAPI.Repositories
                 throw new ArgumentException("Entity");
             }
 
-            T _entity = _entities.SingleOrDefault(s => s.Id == Id);
+            TEntity _entity = _context.SingleOrDefault(s => s.Id == Id);
             if (_entity == null)
             {
                 throw new ArgumentException("Entity");
             }
-            _entities.Remove(_entity);
+            _context.Remove(_entity);
             _context.SaveChanges();
         }
     }

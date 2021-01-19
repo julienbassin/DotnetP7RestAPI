@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace Dot.Net.WebApi.Domain
+namespace PoseidonRestAPI.Domain
 {
     public class BidList
     {
@@ -14,8 +14,6 @@ namespace Dot.Net.WebApi.Domain
         public double Bid { get; set; }
         public double Ask { get; set; }
         public string BenchMark { get; set; }
-
-        [Timestamp]
         public DateTime? BidListDate { get; set; } = DateTime.Now;
         public string Commentary { get; set; }
         public string Security { get; set; }
@@ -23,8 +21,6 @@ namespace Dot.Net.WebApi.Domain
         public string Trader { get; set; }
         public string Book { get; set; }
         public string CreationName { get; set; }
-
-        [Timestamp]
         public DateTime? CreationDate { get; set; } = DateTime.Now;
         public string RevisionName { get; set; }
 

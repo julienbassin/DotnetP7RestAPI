@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Dot.Net.WebApi.Controllers
+namespace PoseidonRestAPI.Domain
 {
     public class Rule
     {

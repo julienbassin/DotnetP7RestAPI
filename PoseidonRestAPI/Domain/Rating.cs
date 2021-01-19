@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Dot.Net.WebApi.Controllers.Domain
+namespace PoseidonRestAPI.Domain
 {
     public class Rating
     {

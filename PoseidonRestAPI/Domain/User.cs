@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Dot.Net.WebApi.Domain
+namespace PoseidonRestAPI.Domain
 {
     public class User
     {
