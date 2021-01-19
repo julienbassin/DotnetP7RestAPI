@@ -1,7 +1,8 @@
 using System.Linq;
 using PoseidonRestAPI.Data;
+using PoseidonRestAPI.Domain;
 
-namespace Dot.Net.WebApi.Repositories
+namespace PoseidonRestAPI.Repositories
 {
     public class UserRepository
     {

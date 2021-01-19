@@ -4,39 +4,37 @@ using System.Collections.Generic;
 using System.Linq;
 using PoseidonRestAPI.Data;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class RepositoryBase<TEntity>  where TEntity : class
+    public class RepositoryBase<TEntity> : IRepositoryBase<TEntity>  where TEntity : class
     {
         public readonly LocalDbContext _context;
-        string errorMessage = string.Empty;
-
         public RepositoryBase(LocalDbContext context)
         {
             _context = context;
         }
 
-        public virtual TEntity[] GetAll()
+        public IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return _context.Set<TEntity>().ToArray();
+            return _context.Set<TEntity>().Where(predicate);
         }
 
-        public TEntity GetById(Expression<<>>)
+        public ValueTask<TEntity> GetByIdAsync(int Id)
         {
-            //use predicate
-            return _entities.SingleOrDefault(s => s.Id == Id);
+
+            return _context.Set<TEntity>().FindAsync(Id);
         }
 
-        public void Insert(T entity)
+        public async Task AddAsync(TEntity entity)
         {
             if (entity == null)
             {
                 throw new ArgumentException("Entity");
             }
 
-            _context.Add(entity);
-            _context.SaveChanges();
+            await _context.Set<TEntity>().AddAsync(entity);
         }
 
         public void Update(TEntity entity)
@@ -49,25 +47,14 @@ namespace PoseidonRestAPI.Repositories
             _context.SaveChanges();
         }
 
-        public void DeleteAll()
+        public void RemoveRange(IEnumerable<TEntity> entities)
         {
-            // implement remove all entities
+            _context.Set<TEntity>().RemoveRange(entities);
         }
 
-        public void DeleteById(int Id)
+        public void Remove(TEntity entity)
         {
-            if (Id < 0)
-            {
-                throw new ArgumentException("Entity");
-            }
-
-            TEntity _entity = _context.SingleOrDefault(s => s.Id == Id);
-            if (_entity == null)
-            {
-                throw new ArgumentException("Entity");
-            }
-            _context.Remove(_entity);
-            _context.SaveChanges();
+            _context.Set<TEntity>().Remove(entity);
         }
     }
 }

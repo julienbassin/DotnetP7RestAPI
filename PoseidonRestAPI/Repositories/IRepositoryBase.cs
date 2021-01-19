@@ -1,14 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public interface IRepositoryBase<T> where T : class
+    public interface IRepositoryBase<TEntity> where TEntity : class
     {
         void DeleteAll();
         void DeleteById(int Id);
-        IEnumerable<T> GetAll();
-        T GetById(int Id);
-        void Insert(T entity);
-        void Update(T entity);
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        ValueTask<TEntity> GetByIdAsync(int Id);
+        Task AddAsync(TEntity entity);
+        void Update(TEntity entity);
     }
 }

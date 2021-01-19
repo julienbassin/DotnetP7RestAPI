@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Domain;
 
-namespace Dot.Net.WebApi.Controllers
+namespace PoseidonRestAPI.Controllers
 {
     [Route("[controller]")]
     public class BidListController : Controller

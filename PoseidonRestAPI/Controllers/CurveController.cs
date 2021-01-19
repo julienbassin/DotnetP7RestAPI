@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Domain;
 
-namespace Dot.Net.WebApi.Controllers
+namespace PoseidonRestAPI.Controllers
 {
     [Route("[controller]")]
     public class CurveController : Controller

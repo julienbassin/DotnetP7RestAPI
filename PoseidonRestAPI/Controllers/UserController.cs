@@ -1,13 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.Repositories;
+using System;
 
-namespace Dot.Net.WebApi.Controllers
+namespace PoseidonRestAPI.Controllers
 {
     [Route("[controller]")]
     public class UserController : Controller
