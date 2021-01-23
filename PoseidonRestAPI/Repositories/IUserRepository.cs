@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class IUserRepository
+    public class IUserRepository: IGenericRepository<UserRepository>
     {
     }
 }
