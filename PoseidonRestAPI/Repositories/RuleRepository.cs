@@ -55,12 +55,12 @@ namespace PoseidonRestAPI.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void RemoveBidListEntityRange(IEnumerable<Rule> entities)
+        public void RemoveRuleEntityRange(IEnumerable<Rule> entities)
         {
             _DbSet.RemoveRange(entities);
         }
 
-        public void RemoveBidListEntity(object entity)
+        public void RemoveRuleEntity(object entity)
         {
             Rule existing = _DbSet.Find(entity);
             _DbSet.Remove(existing);

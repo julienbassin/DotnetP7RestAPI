@@ -12,8 +12,8 @@ namespace PoseidonRestAPI.Repositories
         IEnumerable<Rule> FindRuleEntity(Expression<Func<Rule, bool>> predicate);
         IEnumerable<Rule> GetAllRulesEntity();
         ValueTask<Rule> GetRuleEntityByIdAsync(int Id);
-        void RemoveBidListEntity(object entity);
-        void RemoveBidListEntityRange(IEnumerable<Rule> entities);
+        void RemoveRuleEntity(object entity);
+        void RemoveRuleEntityRange(IEnumerable<Rule> entities);
         void UpdateRuleEntity(Rule entity);
     }
 }

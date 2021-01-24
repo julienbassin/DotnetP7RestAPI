@@ -44,7 +44,7 @@ namespace PoseidonRestAPI.Repositories
             await _DbSet.AddAsync(entity);
         }
 
-        public void UpdateBidListEntity(User entity)
+        public void UpdateUserEntity(User entity)
         {
             if (entity == null)
             {
@@ -55,12 +55,12 @@ namespace PoseidonRestAPI.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void RemoveBidListEntityRange(IEnumerable<User> entities)
+        public void RemoveUserEntityRange(IEnumerable<User> entities)
         {
             _DbSet.RemoveRange(entities);
         }
 
-        public void RemoveBidListEntity(object entity)
+        public void RemoveUserEntity(object entity)
         {
             User existing = _DbSet.Find(entity);
             _DbSet.Remove(existing);

@@ -12,8 +12,8 @@ namespace PoseidonRestAPI.Repositories
         IEnumerable<User> FindUserEntity(Expression<Func<User, bool>> predicate);
         IEnumerable<User> GetAllUsersEntity();
         ValueTask<User> GetUserEntityByIdAsync(int Id);
-        void RemoveBidListEntity(object entity);
-        void RemoveBidListEntityRange(IEnumerable<User> entities);
-        void UpdateBidListEntity(User entity);
+        void RemoveUserEntity(object entity);
+        void RemoveUserEntityRange(IEnumerable<User> entities);
+        void UpdateUserEntity(User entity);
     }
 }
