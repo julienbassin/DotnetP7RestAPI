@@ -14,8 +14,8 @@ namespace PoseidonRestAPI.Controllers
     public class BidListController : Controller
     {
 
-        private IGenericRepository<BidList> _Repository;
-        public BidListController(IGenericRepository<BidList> repository)
+        private IGenericRepository<CurvePoint> _Repository;
+        public BidListController(IGenericRepository<CurvePoint> repository)
         {
             _Repository = repository;
         }
@@ -36,7 +36,7 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpGet("/bidList/validate")]
-        public IActionResult Validate([FromBody]BidList bidList)
+        public IActionResult Validate([FromBody]CurvePoint bidList)
         {
             // TODO: check data valid and save to db, after saving return bid list
             return View("bidList/add");
@@ -49,7 +49,7 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpPost("/bidList/update/{id}")]
-        public IActionResult UpdateBid(int id, [FromBody] BidList bidList)
+        public IActionResult UpdateBid(int id, [FromBody] CurvePoint bidList)
         {
             // TODO: check required fields, if valid call service to update Bid and return list Bid
             return Redirect("/bidList/list");

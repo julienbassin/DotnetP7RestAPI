@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class BidListRepository : GenericRepository<BidList>, IBidListRepository
+    public class BidListRepository : GenericRepository<CurvePoint>, IBidListRepository
     {
         public BidListRepository(LocalDbContext context) : base(context) { }
 
-        public IEnumerable<BidList> GetAllBidlist()
+        public IEnumerable<CurvePoint> GetAllBidlist()
         {
             return _DbSet.AsEnumerable();
         }
 
-        public IEnumerable<BidList> FindBidList(Expression<Func<BidList, bool>> predicate)
+        public IEnumerable<CurvePoint> FindBidList(Expression<Func<CurvePoint, bool>> predicate)
         {
             return _DbSet.Where(predicate);
         }
 
-        public ValueTask<BidList> GetBidListByIdAsync(int Id)
+        public ValueTask<CurvePoint> GetBidListByIdAsync(int Id)
         {
 
             return _DbSet.FindAsync(Id);
@@ -34,7 +34,7 @@ namespace PoseidonRestAPI.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task AddBidlistAsync(BidList entity)
+        public async Task AddBidlistAsync(CurvePoint entity)
         {
             if (entity == null)
             {
@@ -44,7 +44,7 @@ namespace PoseidonRestAPI.Repositories
             await _DbSet.AddAsync(entity);
         }
 
-        public void UpdateBidlist(BidList entity)
+        public void UpdateBidlist(CurvePoint entity)
         {
             if (entity == null)
             {
@@ -55,14 +55,14 @@ namespace PoseidonRestAPI.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void RemoveBidListRange(IEnumerable<BidList> entities)
+        public void RemoveBidListRange(IEnumerable<CurvePoint> entities)
         {
             _DbSet.RemoveRange(entities);
         }
 
         public void RemoveBidlist(object entity)
         {
-            BidList existing = _DbSet.Find(entity);
+            CurvePoint existing = _DbSet.Find(entity);
             _DbSet.Remove(existing);
         }
 
