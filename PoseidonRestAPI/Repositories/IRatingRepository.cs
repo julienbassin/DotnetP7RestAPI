@@ -1,11 +1,12 @@
-﻿using System;
+﻿using PoseidonRestAPI.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class IRatingRepository
+    public interface IRatingRepository : IGenericRepository<Rating>
     {
     }
 }

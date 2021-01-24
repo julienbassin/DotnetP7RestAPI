@@ -10,12 +10,17 @@ namespace PoseidonRestAPI.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        public readonly LocalDbContext _context;
+        public LocalDbContext _context = null;
         public DbSet<T> _DbSet = null;
         public GenericRepository(LocalDbContext context)
         {
             _context = context;
             _DbSet = _context.Set<T>();
+        }
+
+        public IEnumerable<T> GetAll()
+        {
+            return _DbSet.AsEnumerable();
         }
 
         public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)

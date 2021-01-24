@@ -5,16 +5,34 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.Repositories;
 
 namespace PoseidonRestAPI.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("bidlist")]
     public class BidListController : Controller
     {
-        [HttpGet("/")]
-        public IActionResult Home()
+
+        private IGenericRepository<BidList> _Repository;
+        public BidListController(IGenericRepository<BidList> repository)
         {
-            return View("Home");
+            _Repository = repository;
+        }
+
+
+        [HttpGet("")]
+        public IActionResult Index()
+        {
+            try
+            {
+                var result = _Repository.GetAll();
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
         [HttpGet("/bidList/validate")]

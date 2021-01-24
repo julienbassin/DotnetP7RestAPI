@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PoseidonRestAPI.Repositories
+namespace PoseidonRestAPI.Services
 {
-    public interface ICurveRepository
+    interface IRatingService
     {
     }
 }

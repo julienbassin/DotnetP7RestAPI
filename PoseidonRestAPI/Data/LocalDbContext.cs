@@ -7,6 +7,8 @@ namespace PoseidonRestAPI.Data
 {
     public class LocalDbContext : DbContext
     {
+        public LocalDbContext(DbContextOptions<LocalDbContext> options) :base(options)
+        { }
         public DbSet<BidList> BidList { get; set; }
         public DbSet<CurvePoint> CurvePoints { get; set; }
         public DbSet<Rating> Ratings { get; set; }
