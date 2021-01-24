@@ -13,17 +13,17 @@ namespace PoseidonRestAPI.Repositories
     {
         public BidListRepository(LocalDbContext context) : base(context) { }
 
-        public IEnumerable<BidList> GetAllBidlist()
+        public IEnumerable<BidList> GetAllBidlistEntity()
         {
             return _DbSet.AsEnumerable();
         }
 
-        public IEnumerable<BidList> FindBidList(Expression<Func<BidList, bool>> predicate)
+        public IEnumerable<BidList> FindBidListEntity(Expression<Func<BidList, bool>> predicate)
         {
             return _DbSet.Where(predicate);
         }
 
-        public ValueTask<BidList> GetBidListByIdAsync(int Id)
+        public ValueTask<BidList> GetBidListEntityByIdAsync(int Id)
         {
 
             return _DbSet.FindAsync(Id);
@@ -34,7 +34,7 @@ namespace PoseidonRestAPI.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task AddBidlistAsync(BidList entity)
+        public async Task AddBidListEntityAsync(BidList entity)
         {
             if (entity == null)
             {
@@ -44,7 +44,7 @@ namespace PoseidonRestAPI.Repositories
             await _DbSet.AddAsync(entity);
         }
 
-        public void UpdateBidlist(BidList entity)
+        public void UpdateBidListEntity(BidList entity)
         {
             if (entity == null)
             {
@@ -55,12 +55,12 @@ namespace PoseidonRestAPI.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void RemoveBidListRange(IEnumerable<BidList> entities)
+        public void RemoveBidListEntityRange(IEnumerable<BidList> entities)
         {
             _DbSet.RemoveRange(entities);
         }
 
-        public void RemoveBidlist(object entity)
+        public void RemoveBidListEntity(object entity)
         {
             BidList existing = _DbSet.Find(entity);
             _DbSet.Remove(existing);

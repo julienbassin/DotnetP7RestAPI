@@ -13,7 +13,7 @@ namespace PoseidonRestAPI.Repositories
     {
         public CurvePointRepository(LocalDbContext context) : base(context) { }
 
-        public IEnumerable<CurvePoint> GetAllBidlist()
+        public IEnumerable<CurvePoint> GetAllCurvePointEntity()
         {
             return _DbSet.AsEnumerable();
         }

@@ -1,36 +1,69 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using PoseidonRestAPI.Data;
 using PoseidonRestAPI.Domain;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class UserRepository
+    public class UserRepository : GenericRepository<User>, IUserRepository
     {
-        public LocalDbContext DbContext { get; }
+        public UserRepository(LocalDbContext context) : base(context) { }
 
-        public UserRepository(LocalDbContext dbContext)
+        public IEnumerable<User> GetAllUsersEntity()
         {
-            DbContext = dbContext;
+            return _DbSet.AsEnumerable();
         }
 
-        public User FindByUserName(string userName)
+        public IEnumerable<User> FindUserEntity(Expression<Func<User, bool>> predicate)
         {
-            return DbContext.Users.Where(user => user.UserName == userName)
-                                  .FirstOrDefault();
+            return _DbSet.Where(predicate);
         }
 
-        public User[] FindAll()
+        public ValueTask<User> GetUserEntityByIdAsync(int Id)
         {
-            return DbContext.Users.ToArray();
+
+            return _DbSet.FindAsync(Id);
         }
 
-        public void Add(User user)
+        /// <summary>
+        /// Add entity
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public async Task AddUserEntityAsync(User entity)
         {
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity");
+            }
+
+            await _DbSet.AddAsync(entity);
         }
 
-        public User FindById(int id)
+        public void UpdateBidListEntity(User entity)
         {
-            return null;
+            if (entity == null)
+            {
+                throw new ArgumentException("Entity");
+            }
+
+            _DbSet.Attach(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void RemoveBidListEntityRange(IEnumerable<User> entities)
+        {
+            _DbSet.RemoveRange(entities);
+        }
+
+        public void RemoveBidListEntity(object entity)
+        {
+            User existing = _DbSet.Find(entity);
+            _DbSet.Remove(existing);
         }
     }
 }
