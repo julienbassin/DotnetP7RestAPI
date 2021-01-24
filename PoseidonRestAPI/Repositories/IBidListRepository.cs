@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public interface IBidListRepository : IGenericRepository<CurvePoint> 
+    public interface IBidListRepository : IGenericRepository<BidList> 
     {
     
     }

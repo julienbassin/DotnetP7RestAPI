@@ -3,7 +3,7 @@ using System;
 
 namespace PoseidonRestAPI.Domain
 {
-    public class CurvePoint
+    public class BidList
     {
         [Key]
         public int BidListId { get; set; }

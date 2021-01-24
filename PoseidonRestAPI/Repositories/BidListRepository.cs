@@ -9,21 +9,21 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class BidListRepository : GenericRepository<CurvePoint>, IBidListRepository
+    public class BidListRepository : GenericRepository<BidList>, IBidListRepository
     {
         public BidListRepository(LocalDbContext context) : base(context) { }
 
-        public IEnumerable<CurvePoint> GetAllBidlist()
+        public IEnumerable<BidList> GetAllBidlist()
         {
             return _DbSet.AsEnumerable();
         }
 
-        public IEnumerable<CurvePoint> FindBidList(Expression<Func<CurvePoint, bool>> predicate)
+        public IEnumerable<BidList> FindBidList(Expression<Func<BidList, bool>> predicate)
         {
             return _DbSet.Where(predicate);
         }
 
-        public ValueTask<CurvePoint> GetBidListByIdAsync(int Id)
+        public ValueTask<BidList> GetBidListByIdAsync(int Id)
         {
 
             return _DbSet.FindAsync(Id);
@@ -34,7 +34,7 @@ namespace PoseidonRestAPI.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task AddBidlistAsync(CurvePoint entity)
+        public async Task AddBidlistAsync(BidList entity)
         {
             if (entity == null)
             {
@@ -44,7 +44,7 @@ namespace PoseidonRestAPI.Repositories
             await _DbSet.AddAsync(entity);
         }
 
-        public void UpdateBidlist(CurvePoint entity)
+        public void UpdateBidlist(BidList entity)
         {
             if (entity == null)
             {
@@ -55,14 +55,14 @@ namespace PoseidonRestAPI.Repositories
             _context.Entry(entity).State = EntityState.Modified;
         }
 
-        public void RemoveBidListRange(IEnumerable<CurvePoint> entities)
+        public void RemoveBidListRange(IEnumerable<BidList> entities)
         {
             _DbSet.RemoveRange(entities);
         }
 
         public void RemoveBidlist(object entity)
         {
-            CurvePoint existing = _DbSet.Find(entity);
+            BidList existing = _DbSet.Find(entity);
             _DbSet.Remove(existing);
         }
 
