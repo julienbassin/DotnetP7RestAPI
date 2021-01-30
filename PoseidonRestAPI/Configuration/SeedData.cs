@@ -18,14 +18,12 @@ namespace PoseidonRestAPI.Configuration
             builder.HasData(
                 new BidList 
                 {
-                    BidListId = 1,
                     Account = "Julien",
                     BidQuantity = 10.0
                 },
 
                 new BidList
                 {
-                    BidListId = 2,
                     Account = "test",
                     BidQuantity = 20.0
                 }

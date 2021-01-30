@@ -45,6 +45,7 @@ namespace PoseidonRestAPI.Repositories
                 throw new ArgumentException("Entity");
             }
             _context.Set<TEntity>().Add(entity);
+            
             _context.SaveChanges();
         }
 

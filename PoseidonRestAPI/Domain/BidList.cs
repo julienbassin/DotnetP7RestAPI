@@ -6,7 +6,7 @@ namespace PoseidonRestAPI.Domain
 {
     public class BidList
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]      
+        [Key]
         public int BidListId { get; set; }
         public string Account { get; set; }
         public string Type { get; set; }
