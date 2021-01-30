@@ -6,14 +6,8 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public interface IUserRepository
+    public interface IUserRepository : IGenericRepository<User>
     {
-        Task AddUserEntityAsync(User entity);
-        IEnumerable<User> FindUserEntity(Expression<Func<User, bool>> predicate);
-        IEnumerable<User> GetAllUsersEntity();
-        ValueTask<User> GetUserEntityByIdAsync(int Id);
-        void RemoveUserEntity(object entity);
-        void RemoveUserEntityRange(IEnumerable<User> entities);
-        void UpdateUserEntity(User entity);
+        
     }
 }

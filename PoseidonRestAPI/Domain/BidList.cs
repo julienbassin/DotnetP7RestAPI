@@ -1,11 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PoseidonRestAPI.Domain
 {
     public class BidList
     {
-        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]      
         public int BidListId { get; set; }
         public string Account { get; set; }
         public string Type { get; set; }
@@ -23,8 +24,6 @@ namespace PoseidonRestAPI.Domain
         public string CreationName { get; set; }
         public DateTime? CreationDate { get; set; } = DateTime.Now;
         public string RevisionName { get; set; }
-
-        [Timestamp]
         public DateTime? RevisionDate { get; set; } = DateTime.Now;
         public string DealName { get; set; }
         public string SourceListId { get; set; }

@@ -31,7 +31,6 @@ namespace PoseidonRestAPI
         {
             services.AddDbContext<LocalDbContext>(options => 
                     options.UseSqlServer(Configuration.GetConnectionString("Default")));
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBidListRepository, BidListRepository>();
             services.AddControllers().AddNewtonsoftJson(
                 x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

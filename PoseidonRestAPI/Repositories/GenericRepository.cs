@@ -8,30 +8,29 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public abstract class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
-        public LocalDbContext _context = null;
-        public DbSet<T> _DbSet = null;
+        public LocalDbContext _context { get; }
         public GenericRepository(LocalDbContext context)
         {
             _context = context;
-            _DbSet = _context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public virtual IEnumerable<TEntity> GetAll()
         {
-            return _DbSet.AsEnumerable();
+            var result = _context.Set<TEntity>().ToList();
+            return result;
         }
 
-        public IEnumerable<T> Find(Expression<Func<T, bool>> predicate)
+        public virtual IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate)
         {
-            return _DbSet.Where(predicate);
+            return _context.Set<TEntity>().Where(predicate).ToList();
         }
 
-        public ValueTask<T> GetByIdAsync(int Id)
+        public virtual TEntity FindById(int id)
         {
-
-            return _DbSet.FindAsync(Id);
+            var result = _context.Set<TEntity>().Find(id);
+            return result ;
         }
 
         /// <summary>
@@ -39,36 +38,32 @@ namespace PoseidonRestAPI.Repositories
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public async Task AddAsync(T entity)
+        public void Insert(TEntity entity)
         {
             if (entity == null)
             {
                 throw new ArgumentException("Entity");
             }
-
-            await _DbSet.AddAsync(entity);
+            _context.Set<TEntity>().Add(entity);
+            _context.SaveChanges();
         }
 
-        public void Update(T entity)
+        public virtual void Update(TEntity entity)
         {
             if (entity == null)
             {
                 throw new ArgumentException("Entity");
             }
-
-            _DbSet.Attach(entity);
-            _context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public virtual void Delete(int Id)
         {
-            _DbSet.RemoveRange(entities);
-        }
-
-        public void Remove(object entity)
-        {
-            T existing = _DbSet.Find(entity);
-            _DbSet.Remove(existing);
+            var entity = _context.Set<TEntity>().Find(Id);
+            if (entity != null)
+            {
+                _context.Set<TEntity>().Remove(entity);
+            }
         }
     }
 }

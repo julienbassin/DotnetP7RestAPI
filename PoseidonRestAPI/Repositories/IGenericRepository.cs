@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public interface IGenericRepository<T> where T : class
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task AddAsync(T entity);
-        IEnumerable<T> GetAll();
-        IEnumerable<T> Find(Expression<Func<T, bool>> predicate);
-        ValueTask<T> GetByIdAsync(int Id);
-        void Remove(object entity);
-        void RemoveRange(IEnumerable<T> entities);
-        void Update(T entity);
+        void Insert(TEntity entity);
+        IEnumerable<TEntity> GetAll();
+        IEnumerable<TEntity> Find(Expression<Func<TEntity, bool>> predicate);
+        TEntity FindById(int id);
+        void Delete(int Id);
+        void Update(TEntity entity);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Domain;
@@ -14,7 +15,7 @@ namespace PoseidonRestAPI.Controllers
     public class BidListController : Controller
     {
 
-        private IBidListRepository _bidListRepository;
+        private readonly IBidListRepository _bidListRepository;
         public BidListController(IBidListRepository bidListRepository)
         {
             _bidListRepository = bidListRepository ??
@@ -23,12 +24,12 @@ namespace PoseidonRestAPI.Controllers
 
 
         [HttpGet()]
-        public ActionResult <IEnumerable<BidList>> GetBidlist()
+        public ActionResult <IEnumerable<BidList>> GetAll()
         {
             try
             {
                 var result = _bidListRepository.GetAll();
-                return View(new JsonResult(result));
+                return Ok(new JsonResult(result));
             }
             catch (Exception ex)
             {
@@ -37,12 +38,12 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpGet("{bidlistId}")]
-        public IActionResult GetBidlistById(int bidListId)
+        public IActionResult FindBidlistById(int bidListId)
         {
             try
             {
-                var result = _bidListRepository.GetByIdAsync(bidListId);
-                return View(new JsonResult(result));
+                var result = _bidListRepository.FindById(bidListId);
+                return Ok(new JsonResult(result));
             }
             catch (Exception ex)
             {
@@ -50,30 +51,59 @@ namespace PoseidonRestAPI.Controllers
             }
         }
 
-        [HttpGet("/bidList/validate")]
-        public IActionResult Validate([FromBody]CurvePoint bidList)
+        [HttpPost]
+        public void AddBidList([FromBody] BidList bidList)
         {
-            // TODO: check data valid and save to db, after saving return bid list
-            return View("bidList/add");
+            //if (bidList == null)
+            //{
+            //    return BadRequest("BidList object is null");
+            //}
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest("Invalid model object");
+            //}
+
+            //try
+            //{
+                
+                
+                
+            //}
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Internal server error");
+            //}            //if (bidList == null)
+            //{
+            //    return BadRequest("BidList object is null");
+            //}
+
+            //if (!ModelState.IsValid)
+            //{
+            //    return BadRequest("Invalid model object");
+            //}
+
+            //try
+            //{
+                
+                
+                
+            //}
+            //catch (Exception)
+            //{
+            //    return StatusCode(500, "Internal server error");
+            //}
+
+            _bidListRepository.Insert(bidList);
+
         }
 
-        [HttpGet("/bidList/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [HttpDelete]
+        [Route("{Id}")]
+        [AllowAnonymous]
+        public void DeleteBidList(int Id)
         {
-            return View("bidList/update");
-        }
-
-        [HttpPost("/bidList/update/{id}")]
-        public IActionResult UpdateBid(int id, [FromBody] CurvePoint bidList)
-        {
-            // TODO: check required fields, if valid call service to update Bid and return list Bid
-            return Redirect("/bidList/list");
-        }
-
-        [HttpDelete("/bidList/{id}")]
-        public IActionResult DeleteBid(int id)
-        {
-            return Redirect("/bidList/list");
+            _bidListRepository.Delete(Id);
         }
     }
 }
