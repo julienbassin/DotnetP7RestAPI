@@ -13,8 +13,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Data;
 using PoseidonRestAPI.Repositories;
+using Newtonsoft;
 
-namespace Dot.Net.WebApi
+namespace PoseidonRestAPI
 {
     public class Startup
     {
@@ -32,7 +33,9 @@ namespace Dot.Net.WebApi
                     options.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IBidListRepository, BidListRepository>();
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(
+                x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

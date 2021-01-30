@@ -10,24 +10,39 @@ using PoseidonRestAPI.Repositories;
 namespace PoseidonRestAPI.Controllers
 {
     [ApiController]
-    [Route("bidlist")]
+    [Route("api/bidlist")]
     public class BidListController : Controller
     {
 
-        private IGenericRepository<CurvePoint> _Repository;
-        public BidListController(IGenericRepository<CurvePoint> repository)
+        private IBidListRepository _bidListRepository;
+        public BidListController(IBidListRepository bidListRepository)
         {
-            _Repository = repository;
+            _bidListRepository = bidListRepository ??
+                throw new ArgumentException(nameof(bidListRepository));
         }
 
 
-        [HttpGet("")]
-        public IActionResult Index()
+        [HttpGet()]
+        public ActionResult <IEnumerable<BidList>> GetBidlist()
         {
             try
             {
-                var result = _Repository.GetAll();
-                return View(result);
+                var result = _bidListRepository.GetAll();
+                return View(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
+        }
+
+        [HttpGet("{bidlistId}")]
+        public IActionResult GetBidlistById(int bidListId)
+        {
+            try
+            {
+                var result = _bidListRepository.GetByIdAsync(bidListId);
+                return View(new JsonResult(result));
             }
             catch (Exception ex)
             {

@@ -20,11 +20,11 @@ namespace PoseidonRestAPI.Controllers
             return View("login");
         }
 
-        [HttpGet("/secure/article-details")]
-        public IActionResult GetAllUserArticles()
-        {
-            return View(_userRepository.FindAll());
-        }
+        //[HttpGet("/secure/article-details")]
+        //public IActionResult GetAllUserArticles()
+        //{
+        //    return View(_userRepository.FindAll());
+        //}
 
         [HttpGet("/error")]
         public IActionResult Error()

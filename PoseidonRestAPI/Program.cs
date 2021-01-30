@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Dot.Net.WebApi
+namespace PoseidonRestAPI
 {
     public class Program
     {
