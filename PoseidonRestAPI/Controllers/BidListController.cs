@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Domain;
-using PoseidonRestAPI.Repositories;
+using PoseidonRestAPI.Resources;
+using PoseidonRestAPI.Services;
 
 namespace PoseidonRestAPI.Controllers
 {
@@ -14,12 +16,10 @@ namespace PoseidonRestAPI.Controllers
     [Route("api/bidlist")]
     public class BidListController : Controller
     {
-
-        private readonly IBidListRepository _bidListRepository;
-        public BidListController(IBidListRepository bidListRepository)
+        private readonly IBidListService _bidService;
+        public BidListController(IBidListService bidService)
         {
-            _bidListRepository = bidListRepository ??
-                throw new ArgumentException(nameof(bidListRepository));
+            _bidService = bidService;            
         }
 
 
@@ -28,7 +28,7 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                var result = _bidListRepository.GetAll();
+                var result = _bidService.FindAll();
                 return Ok(new JsonResult(result));
             }
             catch (Exception ex)
@@ -38,11 +38,11 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpGet("{bidlistId}")]
-        public IActionResult FindBidlistById(int bidListId)
+        public IActionResult FindById(int bidListId)
         {
             try
             {
-                var result = _bidListRepository.FindById(bidListId);
+                var result = _bidService.FindById(bidListId);
                 return Ok(new JsonResult(result));
             }
             catch (Exception ex)
@@ -52,7 +52,7 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpPost]
-        public void AddBidList([FromBody] BidList bidList)
+        public void Create([FromBody] EditBidListDTO bidList)
         {
             //if (bidList == null)
             //{
@@ -94,16 +94,17 @@ namespace PoseidonRestAPI.Controllers
             //    return StatusCode(500, "Internal server error");
             //}
 
-            _bidListRepository.Insert(bidList);
+
+
+            _bidService.Add(bidList);
 
         }
 
         [HttpDelete]
         [Route("{Id}")]
-        [AllowAnonymous]
-        public void DeleteBidList(int Id)
+        public void Delete(int Id)
         {
-            _bidListRepository.Delete(Id);
+            _bidService.Delete(Id);
         }
     }
 }

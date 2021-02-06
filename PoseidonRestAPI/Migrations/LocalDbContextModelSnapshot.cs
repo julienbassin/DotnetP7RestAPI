@@ -63,8 +63,6 @@ namespace PoseidonRestAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RevisionDate")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RevisionName")
@@ -91,32 +89,6 @@ namespace PoseidonRestAPI.Migrations
                     b.HasKey("BidListId");
 
                     b.ToTable("BidList");
-
-                    b.HasData(
-                        new
-                        {
-                            BidListId = 1,
-                            Account = "Julien",
-                            Ask = 0.0,
-                            AskQuantity = 0.0,
-                            Bid = 0.0,
-                            BidListDate = new DateTime(2021, 1, 30, 15, 59, 5, 781, DateTimeKind.Local).AddTicks(2750),
-                            BidQuantity = 10.0,
-                            CreationDate = new DateTime(2021, 1, 30, 15, 59, 5, 784, DateTimeKind.Local).AddTicks(5081),
-                            RevisionDate = new DateTime(2021, 1, 30, 15, 59, 5, 784, DateTimeKind.Local).AddTicks(5107)
-                        },
-                        new
-                        {
-                            BidListId = 2,
-                            Account = "test",
-                            Ask = 0.0,
-                            AskQuantity = 0.0,
-                            Bid = 0.0,
-                            BidListDate = new DateTime(2021, 1, 30, 15, 59, 5, 784, DateTimeKind.Local).AddTicks(7582),
-                            BidQuantity = 20.0,
-                            CreationDate = new DateTime(2021, 1, 30, 15, 59, 5, 784, DateTimeKind.Local).AddTicks(7604),
-                            RevisionDate = new DateTime(2021, 1, 30, 15, 59, 5, 784, DateTimeKind.Local).AddTicks(7607)
-                        });
                 });
 
             modelBuilder.Entity("PoseidonRestAPI.Domain.CurvePoint", b =>

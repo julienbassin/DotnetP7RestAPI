@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PoseidonRestAPI.Resources;
 
 namespace PoseidonRestAPI.Services
 {
-    interface IBidListService
+    public interface IBidListService
     {
+        BidListDTO Add(EditBidListDTO editBidListDTO);
+        BidListDTO[] FindAll();
+        BidListDTO FindById(int Id);
+        void Delete(int Id);
     }
 }
