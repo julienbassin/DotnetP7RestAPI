@@ -9,6 +9,5 @@ namespace PoseidonRestAPI.Repositories
 {
     public interface IBidListRepository : IGenericRepository<BidList> 
     {
-        
     }
 }
