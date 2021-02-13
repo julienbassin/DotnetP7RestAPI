@@ -14,10 +14,14 @@ namespace PoseidonRestAPI.Services
         private readonly IBidListRepository _bidListRepository;
         private readonly IMapper _mapper;
 
-        public BidListService(IBidListRepository bidListRepository, IMapper mapper)
+        public BidListService(IBidListRepository bidListRepository,
+                              IMapper mapper)
         {
-            _bidListRepository = bidListRepository;
-            _mapper = mapper;
+            _mapper = mapper ??
+                throw new ArgumentNullException(nameof(_mapper));
+
+            _bidListRepository = bidListRepository ??
+                throw new ArgumentNullException(nameof(_bidListRepository));
         }
 
         // find

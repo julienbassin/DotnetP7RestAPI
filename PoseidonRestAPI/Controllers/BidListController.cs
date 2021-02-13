@@ -1,11 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using PoseidonRestAPI.Domain;
 using PoseidonRestAPI.Resources;
 using PoseidonRestAPI.Services;
@@ -54,49 +49,15 @@ namespace PoseidonRestAPI.Controllers
         [HttpPost]
         public void Create([FromBody] EditBidListDTO bidList)
         {
-            //if (bidList == null)
-            //{
-            //    return BadRequest("BidList object is null");
-            //}
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest("Invalid model object");
-            //}
-
-            //try
-            //{
-                
-                
-                
-            //}
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Internal server error");
-            //}            //if (bidList == null)
-            //{
-            //    return BadRequest("BidList object is null");
-            //}
-
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest("Invalid model object");
-            //}
-
-            //try
-            //{
-                
-                
-                
-            //}
-            //catch (Exception)
-            //{
-            //    return StatusCode(500, "Internal server error");
-            //}
-
-
-
-            _bidService.Add(bidList);
+            try
+            {
+                _bidService.Add(bidList);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
 
         }
 

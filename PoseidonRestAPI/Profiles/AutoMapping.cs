@@ -12,9 +12,17 @@ namespace PoseidonRestAPI.Profiles
     {
         public AutoMapping()
         {
+            // Bidlist
             CreateMap<BidListDTO, BidList>();
             CreateMap<BidList, BidListDTO>();
             CreateMap<EditBidListDTO, BidList>();
+
+            // CurvePoint
+            CreateMap<CurvePointDTO, CurvePoint>();
+            CreateMap<CurvePoint, CurvePointDTO>();
+            CreateMap<EditCurvePointDTO, CurvePoint>();
+
+            // Rating
         }
     }
 }

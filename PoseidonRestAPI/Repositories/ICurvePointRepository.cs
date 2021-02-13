@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public interface ICurvePointRepository
+    public interface ICurvePointRepository: IGenericRepository<CurvePoint>
     {
         
     }

@@ -1,11 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PoseidonRestAPI.Data;
+﻿using PoseidonRestAPI.Data;
 using PoseidonRestAPI.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
@@ -18,6 +12,7 @@ namespace PoseidonRestAPI.Repositories
         //    var _UpdatedBidRepo = _context.BidList.Find(Id);
         //    if (_UpdatedBidRepo != null && entity != null)
         //    {
+        //        _UpdatedBidRepo.Account = entity.Account;
         //        _context.BidList.Update(_UpdatedBidRepo);
         //    }
         //}
