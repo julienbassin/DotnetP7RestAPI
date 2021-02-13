@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    public interface IRatingRepository
+    public interface IRatingRepository : IGenericRepository<Rating>
     {
         
     }

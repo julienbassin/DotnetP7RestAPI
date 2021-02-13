@@ -23,6 +23,14 @@ namespace PoseidonRestAPI.Profiles
             CreateMap<EditCurvePointDTO, CurvePoint>();
 
             // Rating
+            CreateMap<RatingDTO, Rating>();
+            CreateMap<Rating, RatingDTO>();
+            CreateMap<EditRatingDTO, Rating>();
+
+            //Rule
+            CreateMap<RuleDTO, Rule>();
+            CreateMap<Rule, RuleDTO>();
+            CreateMap<EditRuleDTO, Rule>();
         }
     }
 }
