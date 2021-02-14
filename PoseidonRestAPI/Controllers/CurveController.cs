@@ -63,9 +63,24 @@ namespace PoseidonRestAPI.Controllers
 
         [HttpDelete]
         [Route("{Id}")]
-        public void Delete(int Id)
+        public IActionResult Delete(int Id)
         {
-            _curvePointService.Delete(Id);
+            try
+            {
+                var curvePoint = _curvePointService.FindById(Id);
+                if (curvePoint == null)
+                {
+                    return NotFound();
+                }
+                _curvePointService.Delete(Id);
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequestExceptionHandler(e, nameof(Delete));
+            }
         }
     }
 }

@@ -1,52 +1,85 @@
 using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.Services;
+using System;
+using System.Collections.Generic;
 
 namespace PoseidonRestAPI.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/rating")]
     public class RatingController : Controller
     {
-        // TODO: Inject Rating service
+        private readonly IRatingService _ratingService;
 
-        [HttpGet("/rating/list")]
-        public IActionResult Home()
+        public RatingController(IRatingService ratingService)
         {
-            // TODO: find all Rating, add to model
-            return View("rating/list");
+            _ratingService = ratingService;
         }
 
-        [HttpGet("/rating/add")]
-        public IActionResult AddRatingForm([FromBody]Rating rating)
+        [HttpGet()]
+        public ActionResult<IEnumerable<Rating>> GetAll()
         {
-            return View("rating/add");
+            try
+            {
+                var result = _ratingService.FindAll();
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/rating/add")]
-        public IActionResult Validate([FromBody]Rating rating)
+        [HttpGet("{ratingId}")]
+        public IActionResult FindById(int curvePointId)
         {
-            // TODO: check data valid and save to db, after saving return Rating list
-            return View("rating/add");
+            try
+            {
+                var result = _curvePointService.FindById(curvePointId);
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/rating/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [HttpPost]
+        public void Create([FromBody] EditCurvePointDTO curvePoint)
         {
-            // TODO: get Rating by Id and to model then show to the form
-            return View("rating/update");
+            try
+            {
+                _curvePointService.Add(curvePoint);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
         }
 
-        [HttpPost("/rating/update/{id}")]
-        public IActionResult updateRating(int id, [FromBody] Rating rating)
+        [HttpDelete]
+        [Route("{Id}")]
+        public IActionResult Delete(int Id)
         {
-            // TODO: check required fields, if valid call service to update Rating and return Rating list
-            return Redirect("/rating/list");
-        }
+            try
+            {
+                var curvePoint = _curvePointService.FindById(Id);
+                if (curvePoint == null)
+                {
+                    return NotFound();
+                }
+                _curvePointService.Delete(Id);
 
-        [HttpDelete("/rating/{id}")]
-        public IActionResult DeleteRating(int id)
-        {
-            // TODO: Find Rating by Id and delete the Rating, return to Rating list
-            return Redirect("/rating/list");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequestExceptionHandler(e, nameof(Delete));
+            }
         }
     }
 }

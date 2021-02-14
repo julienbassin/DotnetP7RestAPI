@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Services
 {
-    public class RatingService
+    public class RatingService : IRatingService
     {
         private readonly IRatingRepository _ratingRepository;
         private readonly IMapper _mapper;
