@@ -8,6 +8,6 @@ namespace PoseidonRestAPI.Repositories
 {
     public interface ICurvePointRepository: IGenericRepository<CurvePoint>
     {
-        
+        void Update(int Id, CurvePoint entity);
     }
 }

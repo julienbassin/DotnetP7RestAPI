@@ -60,10 +60,10 @@ namespace PoseidonRestAPI.Services
 
         public void Update(int Id, EditCurvePointDTO editCurvePointDTO)
         {
-            var updateCurvePoint = _curvePointRepository.FindById(Id);
-            if (updateCurvePoint != null && editCurvePointDTO != null)
+            var CurvePoint = _curvePointRepository.FindById(Id);
+            if (CurvePoint != null && editCurvePointDTO != null)
             {
-                //_bidListRepository.Update(Id, updateBidList);
+                _curvePointRepository.Update(Id, _mapper.Map(editCurvePointDTO, CurvePoint));
             }
         }
 

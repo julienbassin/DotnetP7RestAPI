@@ -61,6 +61,21 @@ namespace PoseidonRestAPI.Controllers
 
         }
 
+        [HttpPut("{curvePointId}")]
+        public void Update(int curvePointId, [FromBody] EditCurvePointDTO curvePoint)
+        {
+            try
+            {
+                _curvePointService.Update(curvePointId, curvePoint);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
+        }
+
         [HttpDelete]
         [Route("{Id}")]
         public IActionResult Delete(int Id)

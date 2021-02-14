@@ -7,7 +7,8 @@ using System.Collections.Generic;
 
 namespace PoseidonRestAPI.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/rule")]
     public class RuleNameController : Controller
     {
         private readonly IRuleService _ruleService;
