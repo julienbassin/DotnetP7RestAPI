@@ -27,10 +27,20 @@ namespace PoseidonRestAPI.Profiles
             CreateMap<Rating, RatingDTO>();
             CreateMap<EditRatingDTO, Rating>();
 
-            //Rule
+            // Rule
             CreateMap<RuleDTO, Rule>();
             CreateMap<Rule, RuleDTO>();
             CreateMap<EditRuleDTO, Rule>();
+
+            // Trade
+            CreateMap<TradeDTO, Trade>();
+            CreateMap<Trade, TradeDTO>();
+            CreateMap<EditTradeDTO, Trade>();
+
+            // User
+            CreateMap<UserDTO, User>();
+            CreateMap<User, UserDTO>();
+            CreateMap<EditUserDTO, User>();
         }
     }
 }

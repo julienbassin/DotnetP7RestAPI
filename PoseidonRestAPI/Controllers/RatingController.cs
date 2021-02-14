@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.Resources;
 using PoseidonRestAPI.Services;
 using System;
 using System.Collections.Generic;
@@ -32,11 +33,11 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpGet("{ratingId}")]
-        public IActionResult FindById(int curvePointId)
+        public IActionResult FindById(int ratingId)
         {
             try
             {
-                var result = _curvePointService.FindById(curvePointId);
+                var result = _ratingService.FindById(ratingId);
                 return Ok(new JsonResult(result));
             }
             catch (Exception ex)
@@ -46,11 +47,11 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpPost]
-        public void Create([FromBody] EditCurvePointDTO curvePoint)
+        public void Create([FromBody] EditRatingDTO ratingDTO)
         {
             try
             {
-                _curvePointService.Add(curvePoint);
+                _ratingService.Add(ratingDTO);
             }
             catch (Exception)
             {
@@ -66,12 +67,12 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                var curvePoint = _curvePointService.FindById(Id);
+                var curvePoint = _ratingService.FindById(Id);
                 if (curvePoint == null)
                 {
                     return NotFound();
                 }
-                _curvePointService.Delete(Id);
+                _ratingService.Delete(Id);
 
                 return Ok();
             }

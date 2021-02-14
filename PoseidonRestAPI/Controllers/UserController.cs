@@ -1,72 +1,87 @@
 using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Domain;
 using PoseidonRestAPI.Repositories;
+using PoseidonRestAPI.Resources;
+using PoseidonRestAPI.Services;
 using System;
+using System.Collections.Generic;
 
 namespace PoseidonRestAPI.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/user")]
     public class UserController : Controller
     {
-        private UserRepository _userRepository;
+        private readonly IUserService _userService;
 
-        public UserController(UserRepository userRepository)
+        public UserController(IUserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
-        //[HttpGet("/user/list")]
-        //public IActionResult Home()
-        //{
-        //    return View(_userRepository.FindAll());
-        //}
+        [HttpGet()]
+        public ActionResult<IEnumerable<User>> GetAll()
+        {
+            try
+            {
+                var result = _userService.FindAll();
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
+        }
 
-        //[HttpGet("/user/add")]
-        //public IActionResult AddUser([FromBody]User user)
-        //{
-        //    return View("user/add");
-        //}
+        [HttpGet("{userId}")]
+        public IActionResult FindById(int userId)
+        {
+            try
+            {
+                var result = _userService.FindById(userId);
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
+        }
 
-        //[HttpGet("/user/validate")]
-        //public IActionResult Validate([FromBody]User user)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Redirect("user/add");
-        //    }
-           
-        //   _userRepository.Add(user);
-           
-        //    return Redirect("user/list");
-        //}
+        [HttpPost]
+        public void Create([FromBody] EditUserDTO editUserDTO)
+        {
+            try
+            {
+                _userService.Add(editUserDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
 
-        //[HttpGet("/user/update/{id}")]
-        //public IActionResult ShowUpdateForm(int id)
-        //{
-        //    User user = _userRepository.FindById(id);
-            
-        //    if (user == null)
-        //        throw new ArgumentException("Invalid user Id:" + id);
-            
-        //    return View("user/update");
-        //}
+        }
 
-        //[HttpPost("/user/update/{id}")]
-        //public IActionResult updateUser(int id, [FromBody] User user)
-        //{
-        //    // TODO: check required fields, if valid call service to update Trade and return Trade list
-        //    return Redirect("/trade/list");
-        //}
+        [HttpDelete]
+        [Route("{Id}")]
+        public IActionResult Delete(int Id)
+        {
+            try
+            {
+                var user = _userService.FindById(Id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                _userService.Delete(Id);
 
-        //[HttpDelete("/user/{id}")]
-        //public IActionResult DeleteUser(int id)
-        //{
-        //    User user = _userRepository.FindById(id);
-            
-        //    if (user == null)
-        //        throw new ArgumentException("Invalid user Id:" + id);
-                        
-        //    return Redirect("/user/list");
-        //}
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequestExceptionHandler(e, nameof(Delete));
+            }
+        }
     }
 }

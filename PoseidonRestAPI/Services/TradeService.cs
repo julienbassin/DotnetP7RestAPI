@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Services
 {
-    public class TradeService
+    public class TradeService : ITradeService
     {
         private readonly ITradeRepository _tradeRepository;
         private readonly IMapper _mapper;

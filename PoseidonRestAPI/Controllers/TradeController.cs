@@ -1,52 +1,86 @@
 using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.Resources;
+using PoseidonRestAPI.Services;
+using System;
+using System.Collections.Generic;
 
 namespace PoseidonRestAPI.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/trade")]
     public class TradeController : Controller
     {
-        // TODO: Inject Trade service
+        private readonly ITradeService _tradeService;
 
-        [HttpGet("/trade/list")]
-        public IActionResult Home()
+        public TradeController(ITradeService tradeService)
         {
-            // TODO: find all Trade, add to model
-            return View("trade/list");
+            _tradeService = tradeService;
         }
 
-        [HttpGet("/trade/add")]
-        public IActionResult AddTrade([FromBody]Trade trade)
+        [HttpGet()]
+        public ActionResult<IEnumerable<Trade>> GetAll()
         {
-            return View("trade/add");
+            try
+            {
+                var result = _tradeService.FindAll();
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/trade/add")]
-        public IActionResult Validate([FromBody]Trade trade)
+        [HttpGet("{tradeId}")]
+        public IActionResult FindById(int tradeId)
         {
-            // TODO: check data valid and save to db, after saving return Trade list
-            return View("trade/add");
+            try
+            {
+                var result = _tradeService.FindById(tradeId);
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/trade/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [HttpPost]
+        public void Create([FromBody] EditTradeDTO tradeDTO)
         {
-            // TODO: get Trade by Id and to model then show to the form
-            return View("trade/update");
+            try
+            {
+                _tradeService.Add(tradeDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
         }
 
-        [HttpPost("/trade/update/{id}")]
-        public IActionResult updateTrade(int id, [FromBody] Trade trade)
+        [HttpDelete]
+        [Route("{Id}")]
+        public IActionResult Delete(int Id)
         {
-            // TODO: check required fields, if valid call service to update Trade and return Trade list
-            return Redirect("/trade/list");
-        }
+            try
+            {
+                var curvePoint = _tradeService.FindById(Id);
+                if (curvePoint == null)
+                {
+                    return NotFound();
+                }
+                _tradeService.Delete(Id);
 
-        [HttpDelete("/trade/{id}")]
-        public IActionResult DeleteTrade(int id)
-        {
-            // TODO: Find Trade by Id and delete the Trade, return to Trade list
-            return Redirect("/trade/list");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequestExceptionHandler(e, nameof(Delete));
+            }
         }
     }
 }

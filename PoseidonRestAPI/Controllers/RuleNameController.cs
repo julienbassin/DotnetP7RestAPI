@@ -1,52 +1,85 @@
 using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.Resources;
+using PoseidonRestAPI.Services;
+using System;
+using System.Collections.Generic;
 
 namespace PoseidonRestAPI.Controllers
 {
     [Route("[controller]")]
     public class RuleNameController : Controller
     {
-        // TODO: Inject RuleName service
+        private readonly IRuleService _ruleService;
 
-        [HttpGet("/ruleName/list")]
-        public IActionResult Home()
+        public RuleNameController(IRuleService ruleService)
         {
-            // TODO: find all RuleName, add to model
-            return View("ruleName/list");
+            _ruleService = ruleService;
         }
 
-        [HttpGet("/ruleName/add")]
-        public IActionResult AddRuleName([FromBody]Rule trade)
+        [HttpGet()]
+        public ActionResult<IEnumerable<Rule>> GetAll()
         {
-            return View("ruleName/add");
+            try
+            {
+                var result = _ruleService.FindAll();
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/ruleName/add")]
-        public IActionResult Validate([FromBody]Rule trade)
+        [HttpGet("{ruleId}")]
+        public IActionResult FindById(int ruleId)
         {
-            // TODO: check data valid and save to db, after saving return RuleName list
-            return View("ruleName/add");
+            try
+            {
+                var result = _ruleService.FindById(ruleId);
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/ruleName/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [HttpPost]
+        public void Create([FromBody] EditRuleDTO editRuleDTO)
         {
-            // TODO: get RuleName by Id and to model then show to the form
-            return View("ruleName/update");
+            try
+            {
+                _ruleService.Add(editRuleDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
         }
 
-        [HttpPost("/ruleName/update/{id}")]
-        public IActionResult updateRuleName(int id, [FromBody] Rule rating)
+        [HttpDelete]
+        [Route("{Id}")]
+        public IActionResult Delete(int Id)
         {
-            // TODO: check required fields, if valid call service to update RuleName and return RuleName list
-            return Redirect("/ruleName/list");
-        }
+            try
+            {
+                var curvePoint = _ruleService.FindById(Id);
+                if (curvePoint == null)
+                {
+                    return NotFound();
+                }
+                _ruleService.Delete(Id);
 
-        [HttpDelete("/ruleName/{id}")]
-        public IActionResult DeleteRuleName(int id)
-        {
-            // TODO: Find RuleName by Id and delete the RuleName, return to Rule list
-            return Redirect("/ruleName/list");
+                return Ok();
+            }
+            catch (Exception e)
+            {
+
+                return BadRequestExceptionHandler(e, nameof(Delete));
+            }
         }
     }
 }
