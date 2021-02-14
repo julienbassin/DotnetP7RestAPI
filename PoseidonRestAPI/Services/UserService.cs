@@ -70,7 +70,7 @@ namespace PoseidonRestAPI.Services
 
         public void Delete(int Id)
         {
-            _userRepository.DeleteUserById(Id);
+            _userRepository.Delete(Id);
         }
     }
 }

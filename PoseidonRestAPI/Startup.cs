@@ -36,8 +36,19 @@ namespace PoseidonRestAPI
 
             // repository
             services.AddScoped<IBidListRepository, BidListRepository>();
+            services.AddScoped<ICurvePointRepository, CurvePointRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
+            services.AddScoped<IRuleRepository, RuleRepository>();
+            services.AddScoped<ITradeRepository, TradeRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+
             // services
             services.AddTransient<IBidListService, BidListService>();
+            services.AddTransient<ICurvePointService, CurvePointService>();
+            services.AddTransient<IRatingService, RatingService>();
+            services.AddTransient<IRuleService, RuleService>();
+            services.AddTransient<ITradeService, TradeService>();
+            services.AddTransient<IUserService, UserService>();
 
         }
 

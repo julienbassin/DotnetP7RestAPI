@@ -4,10 +4,10 @@ namespace PoseidonRestAPI.Services
 {
     public interface IUserService
     {
-        UserDTO Add(EditUserDTO editUserDTO);
+        UserDTO CreateUser(EditUserDTO editUserDTO);
         void Delete(int Id);
-        UserDTO[] FindAll();
-        UserDTO FindById(int Id);
-        void Update(int Id, EditUserDTO editUserDTO);
+        UserDTO[] FindAllUsers();
+        UserDTO FindUserById(int Id);
+        void UpdateUser(int Id, EditUserDTO editUserDTO);
     }
 }

@@ -23,7 +23,7 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                var result = _userService.FindAll();
+                var result = _userService.FindAllUsers();
                 return Ok(new JsonResult(result));
             }
             catch (Exception ex)
@@ -37,7 +37,7 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                var result = _userService.FindById(userId);
+                var result = _userService.FindUserById(userId);
                 return Ok(new JsonResult(result));
             }
             catch (Exception ex)
@@ -51,7 +51,7 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                _userService.Add(editUserDTO);
+                _userService.CreateUser(editUserDTO);
             }
             catch (Exception)
             {
@@ -67,7 +67,7 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                var user = _userService.FindById(userId);
+                var user = _userService.FindUserById(userId);
                 if (user == null)
                 {
                     return NotFound();
