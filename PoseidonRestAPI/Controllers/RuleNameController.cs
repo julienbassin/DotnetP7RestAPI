@@ -77,8 +77,7 @@ namespace PoseidonRestAPI.Controllers
             }
             catch (Exception e)
             {
-
-                return BadRequestExceptionHandler(e, nameof(Delete));
+                return BadRequest(e);
             }
         }
     }

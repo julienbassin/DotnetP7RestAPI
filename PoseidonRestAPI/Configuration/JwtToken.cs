@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Configuration
 {
-    public class JwtToken
+    public class JwtAccessToken
     {
-        public string Key { get; set; }
-        public string Issuer { get; set; }
-        public string Audience { get; set; }
-        public double DurationInMinutes { get; set; }
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string JWTToken { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime ExpiresAt { get; set; }
     }
 }

@@ -25,21 +25,21 @@ namespace PoseidonRestAPI.Services
         }
 
         // find
-        public UserDTO[] FindAll()
+        public UserDTO[] FindAllUsers()
         {
             return _userRepository.GetAll()
                                .Where(x => x.Id > 0)
                                .Select(x => _mapper.Map<UserDTO>(x)).ToArray();
         }
 
-        public UserDTO FindById(int Id)
+        public UserDTO FindUserById(int Id)
         {
             var _user = _userRepository.FindById(Id);
             return _mapper.Map<UserDTO>(_user);
         }
 
         // add 
-        public UserDTO Add(EditUserDTO editUserDTO)
+        public UserDTO CreateUser(EditUserDTO editUserDTO)
         {
             if (editUserDTO == null)
             {
@@ -59,7 +59,7 @@ namespace PoseidonRestAPI.Services
         }
 
         // edit
-        public void Update(int Id, EditUserDTO editUserDTO)
+        public void UpdateUser(int Id, EditUserDTO editUserDTO)
         {
             var updateUser = _userRepository.FindById(Id);
             if (updateUser != null && editUserDTO != null)
@@ -70,7 +70,7 @@ namespace PoseidonRestAPI.Services
 
         public void Delete(int Id)
         {
-            _userRepository.Delete(Id);
+            _userRepository.DeleteUserById(Id);
         }
     }
 }

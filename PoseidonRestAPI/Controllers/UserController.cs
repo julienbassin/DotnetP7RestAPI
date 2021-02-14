@@ -9,11 +9,10 @@ using System.Collections.Generic;
 namespace PoseidonRestAPI.Controllers
 {
     [ApiController]
-    [Route("api/user")]
+    [Route("api/users")]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
-
         public UserController(IUserService userService)
         {
             _userService = userService;
@@ -63,24 +62,23 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpDelete]
-        [Route("{Id}")]
-        public IActionResult Delete(int Id)
+        [Route("{userId}")]
+        public IActionResult Delete(int userId)
         {
             try
             {
-                var user = _userService.FindById(Id);
+                var user = _userService.FindById(userId);
                 if (user == null)
                 {
                     return NotFound();
                 }
-                _userService.Delete(Id);
+                _userService.Delete(userId);
 
                 return Ok();
             }
             catch (Exception e)
             {
-
-                return BadRequestExceptionHandler(e, nameof(Delete));
+                return BadRequest(e);
             }
         }
     }
