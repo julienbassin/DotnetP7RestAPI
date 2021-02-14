@@ -19,7 +19,7 @@ namespace PoseidonRestAPI.Services
         {
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(mapper));
-            
+
             _curvePointRepository = curvePointRepository ??
                 throw new ArgumentNullException(nameof(_curvePointRepository));
         }

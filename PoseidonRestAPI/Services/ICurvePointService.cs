@@ -1,11 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using PoseidonRestAPI.Resources;
 
 namespace PoseidonRestAPI.Services
 {
-    interface ICurvePointService
+    public interface ICurvePointService
     {
+        CurvePointDTO Add(EditCurvePointDTO editCurvePointDTO);
+        void Delete(int Id);
+        CurvePointDTO[] FindAll();
+        CurvePointDTO FindById(int Id);
+        void Update(int Id, EditCurvePointDTO editCurvePointDTO);
     }
 }

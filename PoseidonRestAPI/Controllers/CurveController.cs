@@ -1,52 +1,71 @@
 using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.Resources;
+using PoseidonRestAPI.Services;
+using System;
+using System.Collections.Generic;
 
 namespace PoseidonRestAPI.Controllers
 {
-    [Route("[controller]")]
+    [ApiController]
+    [Route("api/curvepoint")]
     public class CurveController : Controller
     {
-        // TODO: Inject Curve Point service
+        private readonly ICurvePointService _curvePointService;
 
-        [HttpGet("/curvePoint/list")]
-        public IActionResult Home()
+        public CurveController(ICurvePointService curvePointService)
         {
-            return View("curvePoint/list");
+            _curvePointService = curvePointService;
         }
 
-        [HttpGet("/curvePoint/add")]
-        public IActionResult AddCurvePoint([FromBody]CurvePoint curvePoint)
+        [HttpGet()]
+        public ActionResult<IEnumerable<CurvePoint>> GetAll()
         {
-            return View("curvePoint/add");
+            try
+            {
+                var result = _curvePointService.FindAll();
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/curvePoint/add")]
-        public IActionResult Validate([FromBody]CurvePoint curvePoint)
+        [HttpGet("{curvePointId}")]
+        public IActionResult FindById(int curvePointId)
         {
-            // TODO: check data valid and save to db, after saving return bid list
-            return View("curvePoint/add"    );
+            try
+            {
+                var result = _curvePointService.FindById(curvePointId);
+                return Ok(new JsonResult(result));
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex);
+            }
         }
 
-        [HttpGet("/curvePoint/update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [HttpPost]
+        public void Create([FromBody] EditCurvePointDTO curvePoint)
         {
-            // TODO: get CurvePoint by Id and to model then show to the form
-            return View("curvepoint/update");
+            try
+            {
+                _curvePointService.Add(curvePoint);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
         }
 
-        [HttpPost("/curvepoint/update/{id}")]
-        public IActionResult UpdateCurvePoint(int id, [FromBody] CurvePoint curvePoint)
+        [HttpDelete]
+        [Route("{Id}")]
+        public void Delete(int Id)
         {
-            // TODO: check required fields, if valid call service to update Curve and return Curve list
-            return Redirect("/curvepoint/list");
-        }
-
-        [HttpDelete("/curvepoint/{id}")]
-        public IActionResult DeleteBid(int id)
-        {
-            // TODO: Find Curve by Id and delete the Curve, return to Curve list
-
-            return Redirect("/curvePoint/list");
+            _curvePointService.Delete(Id);
         }
     }
 }

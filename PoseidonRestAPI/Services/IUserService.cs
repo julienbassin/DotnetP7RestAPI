@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Services
 {
-    interface IUserService
+    public interface IUserService
     {
     }
 }

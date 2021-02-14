@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Services
 {
-    interface IRatingService
+    public interface IRatingService
     {
     }
 }
