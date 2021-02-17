@@ -7,27 +7,59 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.Repositories
 {
-    //public class JWTTokenRepository : IJWTTokenRepository
-    //{
-    //    private LocalDbContext _localDBContext;
-    //    public JWTTokenRepository(LocalDbContext context) 
-    //    {
-    //        _localDBContext = context;
-    //    }
+    public class JWTTokenRepository : IJWTTokenRepository
+    {
+        private LocalDbContext _localDBContext;
+        public JWTTokenRepository(LocalDbContext context)
+        {
+            _localDBContext = context;
+        }
 
-    //    // get access token by id
-    //    public JwtAccessToken GetJWTToken(int userId)
-    //    {
-    //        _localDBContext.AccessTokens.Where(x => x.UserId == userId).FirstOrDefault();
-    //    }
+        // get access token by id
+        public JwtAccessToken GetJWTTokenById(int userId)
+        {
+            return _localDBContext.AccessTokens.Where(x => x.UserId == userId).FirstOrDefault();
+        }
 
-    //    public JwtAccessToken CreateAccessToken(int userId)
-    //    {
-    //        // create new token then add it!
-    //        _localDBContext.AccessTokens.Add();
-    //    }
-    //    //// add access token 
+        public JwtAccessToken GetJWTToken(JwtAccessToken tokenAccess)
+        {
+            return GetJWTToken(tokenAccess.JWTToken);
+        }
 
-    //    // remove access token
-    //}
+        public JwtAccessToken GetJWTToken(string token)
+        {
+            return _localDBContext.AccessTokens.Where(x => x.JWTToken == token).FirstOrDefault();
+        }
+        public void SaveAccessToken(JwtAccessToken accessToken, int userId)
+        {
+            // create new token then add it!
+            _localDBContext.AccessTokens.Add(new JwtAccessToken { 
+                 
+                JWTToken = accessToken.JWTToken,
+                UserId = userId,
+                ExpiresAt = accessToken.ExpiresAt                
+            });
+            _localDBContext.SaveChanges();
+        }
+
+
+        // remove access token
+        public void RemoveAccessToken(int userId)
+        {
+            if (userId > 0)
+            {
+                var token = _localDBContext.AccessTokens.Where(x => x.UserId == userId).FirstOrDefault();
+                RemoveAccessToken(token);
+            }
+        }
+
+        public void RemoveAccessToken(JwtAccessToken accessToken)
+        {
+            if (accessToken != null)
+            {
+                _localDBContext.AccessTokens.Remove(accessToken);
+                _localDBContext.SaveChanges();
+            }
+        }
+    }
 }

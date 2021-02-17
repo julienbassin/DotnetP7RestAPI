@@ -8,7 +8,11 @@ namespace PoseidonRestAPI.Repositories
 {
     public interface IJWTTokenRepository
     {
-        JwtAccessToken GetJWTToken(int userId);
-        JwtAccessToken CreateAccessToken(int userId);
+        JwtAccessToken GetJWTTokenById(int userId);
+        JwtAccessToken GetJWTToken(JwtAccessToken tokenAccess);
+        JwtAccessToken GetJWTToken(string token);
+        void SaveAccessToken(JwtAccessToken accessToken, int userId);
+        void RemoveAccessToken(int userId);
+        void RemoveAccessToken(JwtAccessToken accessToken);
     }
 }
