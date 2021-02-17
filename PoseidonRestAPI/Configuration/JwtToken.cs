@@ -13,4 +13,8 @@ namespace PoseidonRestAPI.Configuration
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public DateTime ExpiresAt { get; set; }
     }
+
+    // JwtAccessToken DTO ? 
+
+    // private method to handle generate token and so on...
 }

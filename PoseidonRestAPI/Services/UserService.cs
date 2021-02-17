@@ -12,13 +12,18 @@ namespace PoseidonRestAPI.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IJWTTokenRepository _tokenRepository;
         private readonly IMapper _mapper;
 
         public UserService(IUserRepository userRepository,
-                              IMapper mapper)
+                           IJWTTokenRepository tokenRepository,
+                           IMapper mapper)
         {
             _mapper = mapper ??
                 throw new ArgumentNullException(nameof(_mapper));
+
+            _tokenRepository = tokenRepository ??
+                throw new ArgumentNullException(nameof(_tokenRepository));
 
             _userRepository = userRepository ??
                 throw new ArgumentNullException(nameof(_userRepository));
@@ -38,7 +43,7 @@ namespace PoseidonRestAPI.Services
             return _mapper.Map<UserDTO>(_user);
         }
 
-        // add 
+        // add user  + generate token ? 
         public UserDTO CreateUser(EditUserDTO editUserDTO)
         {
             if (editUserDTO == null)
@@ -58,7 +63,7 @@ namespace PoseidonRestAPI.Services
             return _mapper.Map<UserDTO>(currentUser);
         }
 
-        // edit
+        // edit user + token  ?
         public void UpdateUser(int Id, EditUserDTO editUserDTO)
         {
             var updateUser = _userRepository.FindById(Id);
@@ -68,6 +73,7 @@ namespace PoseidonRestAPI.Services
             }
         }
 
+        // delete user 
         public void Delete(int Id)
         {
             _userRepository.Delete(Id);
