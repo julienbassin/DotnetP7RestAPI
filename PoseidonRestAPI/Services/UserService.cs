@@ -69,11 +69,11 @@ namespace PoseidonRestAPI.Services
             var updateUser = _userRepository.FindById(Id);
             if (updateUser != null && editUserDTO != null)
             {
-                //_bidListRepository.Update(Id, updateBidList);
+                _userRepository.Update(Id, _mapper.Map(editUserDTO, updateUser));
             }
         }
 
-        // delete user 
+        // delete user
         public void Delete(int Id)
         {
             _userRepository.Delete(Id);

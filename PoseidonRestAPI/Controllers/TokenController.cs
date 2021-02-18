@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Repositories;
+using PoseidonRestAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,46 +11,18 @@ namespace PoseidonRestAPI.Controllers
     [ApiController]
     public class TokenController : Controller
     {
-        public IJWTTokenRepository _jWTTokenRepository;
-        public TokenController(IJWTTokenRepository jWTTokenRepository)
+        public IUserService _userService;
+        public TokenController(IUserService userService)
         {
-            _jWTTokenRepository = jWTTokenRepository;
-        }
-
-        [HttpGet()]
-        public ActionResult<IEnumerable<Trade>> GetAll()
-        {
-            try
-            {
-                var result = _jWTTokenRepository.FindAll();
-                return Ok(new JsonResult(result));
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex);
-            }
-        }
-
-        [HttpGet("{tradeId}")]
-        public IActionResult FindById(int tradeId)
-        {
-            try
-            {
-                var result = _jWTTokenRepository.FindById(tradeId);
-                return Ok(new JsonResult(result));
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex);
-            }
+            _userService = userService;
         }
 
         [HttpPost]
-        public void Create([FromBody] EditTradeDTO tradeDTO)
+        public void CreateToken([FromBody] EditTradeDTO tradeDTO)
         {
             try
             {
-                _jWTTokenRepository.Add(tradeDTO);
+                _jWTTokenRepository.SaveAccessToken(tradeDTO);
             }
             catch (Exception)
             {
@@ -59,25 +32,5 @@ namespace PoseidonRestAPI.Controllers
 
         }
 
-        [HttpDelete]
-        [Route("{Id}")]
-        public IActionResult Delete(int Id)
-        {
-            try
-            {
-                var curvePoint = _jWTTokenRepository.FindById(Id);
-                if (curvePoint == null)
-                {
-                    return NotFound();
-                }
-                _jWTTokenRepository.Delete(Id);
-
-                return Ok();
-            }
-            catch (Exception e)
-            {
-                return BadRequest(e);
-            }
-        }
     }
 }

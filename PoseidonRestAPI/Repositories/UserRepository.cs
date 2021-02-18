@@ -13,6 +13,17 @@ namespace PoseidonRestAPI.Repositories
     {
         public UserRepository(LocalDbContext context) : base(context) { }
 
-        
+        public void Update(int Id, User user)
+        {
+            if (user != null && Id > 0)
+            {
+                var currentuser = _context.Users.Find(Id);
+                currentuser.FullName = user.FullName;
+                currentuser.UserName = user.UserName;
+                currentuser.Password = user.Password;
+                currentuser.Role = user.Role;                
+            }
+
+        }
     }
 }
