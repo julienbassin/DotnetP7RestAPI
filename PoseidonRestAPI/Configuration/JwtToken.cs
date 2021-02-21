@@ -29,33 +29,32 @@ namespace PoseidonRestAPI.Configuration
         public string RefreshToken { get; set; }
 
         // method to create password hash
-        public static void CreatePasswordHash(string password,
-                                       out byte[] passwordHash,
-                                       out byte[] passwordSalt)
+        public static string CreateSalt(int size)
         {
-            using (var hmac = new HMACSHA512())
-            {
-                passwordSalt = hmac.Key;
-                passwordHash = hmac.ComputeHash
-                        (System.Text.Encoding.UTF8.GetBytes(password));
-            }
+            //Generate a cryptographic random number.
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] buff = new byte[size];
+            rng.GetBytes(buff);
+            return Convert.ToBase64String(buff);
+        }
+
+        public static string GenerateHash(string input, string salt)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(input + salt);
+            SHA256Managed sHA256ManagedString = new SHA256Managed();
+            byte[] hash = sHA256ManagedString.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
         }
 
         // method to handle verifyhash token  
 
-        public bool VerifyPasswordHash(string password,
-                                       byte[] passwordHash,
-                                       byte[] passwordSalt)
+        public static bool AreEqual(string password, string hashedPassword, string salt)
         {
-            using (var hmac = new HMACSHA512(passwordSalt))
-            {
-                var computedHash = hmac.ComputeHash
-                    (System.Text.Encoding.UTF8.GetBytes(password));
-                return computedHash.SequenceEqual(passwordHash);
-            }
+            string newHashedPin = GenerateHash(password, salt);
+            return newHashedPin.Equals(hashedPassword);
         }
 
-        public JsonWebToken GenerateWebToken(int userId)
+        public static JsonWebToken GenerateWebToken(int userId)
         {
             var claims = new[]
             {

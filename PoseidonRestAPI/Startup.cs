@@ -8,6 +8,9 @@ using PoseidonRestAPI.Data;
 using PoseidonRestAPI.Repositories;
 using PoseidonRestAPI.Services;
 using PoseidonRestAPI.Profiles;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using PoseidonRestAPI.Configuration;
 
 namespace PoseidonRestAPI
 {
@@ -51,6 +54,32 @@ namespace PoseidonRestAPI
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IJWTTokenRepository, JWTTokenRepository>();
 
+
+            services.AddAuthorization();
+            services.AddAuthentication(opts =>
+            {
+                opts.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(cfg =>
+            {
+                cfg.RequireHttpsMetadata = false;
+                cfg.SaveToken = true;
+                cfg.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidIssuer = JwtTokenConfig.ValidIssuer,
+                    ValidAudience = JwtTokenConfig.ValidAudience,
+                    IssuerSigningKey = JwtTokenConfig.GenerateKey(),
+                    ClockSkew = JwtTokenConfig.SkewTime,
+
+                    // security switches
+                    RequireExpirationTime = true,
+                    ValidateIssuer = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidateAudience = true
+                };
+            });
+
             // Swagger doc
             services.AddSwaggerGen();
 
@@ -83,6 +112,7 @@ namespace PoseidonRestAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

@@ -46,7 +46,7 @@ namespace PoseidonRestAPI.Services
 
         public UserDTO FindUserByName(string name)
         {
-            var _user = _userRepository.FindByUsername(name);
+            var _user = _userRepository.FindUserByName(name);
             return _mapper.Map<UserDTO>(_user);
         }
 
@@ -59,6 +59,8 @@ namespace PoseidonRestAPI.Services
             }
 
             var currentUser = _mapper.Map<User>(editUserDTO);
+            var hashedPassword = JsonWebToken.GenerateHash(editUserDTO.Password, "128");
+            currentUser.Password = hashedPassword;
 
             try
             {
@@ -71,19 +73,45 @@ namespace PoseidonRestAPI.Services
             return _mapper.Map<UserDTO>(currentUser);
         }
 
+
+        public void SaveJsonWebToken(JsonWebToken jsonWebToken, int userId)
+        {
+            if (jsonWebToken != null && userId > 0)
+            {
+                var currentToken = _tokenRepository.GetJWTTokenById(userId);
+                if (currentToken != null)
+                {
+                    _tokenRepository.RemoveAccessToken(currentToken.UserId);
+                }
+                _tokenRepository.SaveAccessToken(jsonWebToken, userId);
+            }
+        }
+
         // edit user + token  ?
         public void UpdateUser(int Id, EditUserDTO editUserDTO)
         {
             var updateUser = _userRepository.FindById(Id);
             if (updateUser != null && editUserDTO != null)
             {
-                byte[] passwordHash;
-                byte[] passwordSalt;
-                JsonWebToken.CreatePasswordHash(editUserDTO.Password, out passwordHash, out passwordSalt);
-                editUserDTO.PasswordHash = passwordHash;
-                editUserDTO.PasswordSalt = passwordSalt;
+                var hashedPassword = JsonWebToken.GenerateHash(editUserDTO.Password, "128");
+                editUserDTO.Password = hashedPassword;
                 _userRepository.Update(Id, _mapper.Map(editUserDTO, updateUser));
             }
+        }
+
+        public bool CheckUser(string username, string password)
+        {
+            if (String.IsNullOrEmpty(username) || String.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+            var currentUser = _userRepository.FindUserByName(username);
+            if (currentUser == null)
+            {
+                return false;
+            }
+
+            return JsonWebToken.AreEqual(password, currentUser.Password , "128");
         }
 
         // delete user
