@@ -9,5 +9,6 @@ namespace PoseidonRestAPI.Repositories
     public interface IUserRepository : IGenericRepository<User>
     {
         void Update(int Id, User user);
+        User FindByUsername(string username);
     }
 }

@@ -20,10 +20,20 @@ namespace PoseidonRestAPI.Repositories
                 var currentuser = _context.Users.Find(Id);
                 currentuser.FullName = user.FullName;
                 currentuser.UserName = user.UserName;
-                currentuser.Password = user.Password;
+                currentuser.PasswordHash = user.PasswordHash;
+                currentuser.PasswordSalt = user.PasswordSalt;
                 currentuser.Role = user.Role;                
             }
 
+        }
+
+        public User FindByUsername(string username)
+        {
+            if ( String.IsNullOrEmpty(username))
+            {
+                return null;
+            }
+            return _context.Users.Where(x => x.UserName == username).FirstOrDefault();
         }
     }
 }

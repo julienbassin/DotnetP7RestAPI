@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PoseidonRestAPI.Configuration;
 using PoseidonRestAPI.Domain;
 using PoseidonRestAPI.Repositories;
 using PoseidonRestAPI.Resources;
@@ -43,6 +44,12 @@ namespace PoseidonRestAPI.Services
             return _mapper.Map<UserDTO>(_user);
         }
 
+        public UserDTO FindUserByName(string name)
+        {
+            var _user = _userRepository.FindByUsername(name);
+            return _mapper.Map<UserDTO>(_user);
+        }
+
         // add user  + generate token ? 
         public UserDTO CreateUser(EditUserDTO editUserDTO)
         {
@@ -52,6 +59,7 @@ namespace PoseidonRestAPI.Services
             }
 
             var currentUser = _mapper.Map<User>(editUserDTO);
+
             try
             {
                 _userRepository.Insert(currentUser);
@@ -69,6 +77,11 @@ namespace PoseidonRestAPI.Services
             var updateUser = _userRepository.FindById(Id);
             if (updateUser != null && editUserDTO != null)
             {
+                byte[] passwordHash;
+                byte[] passwordSalt;
+                JsonWebToken.CreatePasswordHash(editUserDTO.Password, out passwordHash, out passwordSalt);
+                editUserDTO.PasswordHash = passwordHash;
+                editUserDTO.PasswordSalt = passwordSalt;
                 _userRepository.Update(Id, _mapper.Map(editUserDTO, updateUser));
             }
         }
@@ -77,6 +90,13 @@ namespace PoseidonRestAPI.Services
         public void Delete(int Id)
         {
             _userRepository.Delete(Id);
+        }
+
+        public UserDTO GetUserJwtToken(string jsonWebToken)
+        {
+            var currentToken = _tokenRepository.GetJWTToken(jsonWebToken);
+            var currentuser = _userRepository.FindById(currentToken.UserId);
+            return _mapper.Map<UserDTO>(currentuser);
         }
     }
 }

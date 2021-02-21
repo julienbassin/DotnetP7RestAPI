@@ -21,17 +21,23 @@ namespace PoseidonRestAPI.Repositories
             return _localDBContext.AccessTokens.Where(x => x.UserId == userId).FirstOrDefault();
         }
 
-        public JwtAccessToken GetJWTToken(JwtAccessToken tokenAccess)
+        public JwtAccessToken GetJWTToken(JsonWebToken tokenAccess)
         {
-            return _localDBContext.AccessTokens.Where(x => x.JWTToken == tokenAccess.JWTToken).FirstOrDefault();
+            return GetJWTToken(tokenAccess.Token);
         }
 
-        public void SaveAccessToken(JwtAccessToken accessToken, int userId)
+
+        public JwtAccessToken GetJWTToken(string tokenAccess)
+        {
+            return _localDBContext.AccessTokens.Where(x => x.JWTToken == tokenAccess).FirstOrDefault();
+        }
+
+        public void SaveAccessToken(JsonWebToken accessToken, int userId)
         {
             // create new token then add it!
             var newToken = new JwtAccessToken
             {
-                JWTToken = accessToken.JWTToken,
+                JWTToken = accessToken.Token,
                 UserId = userId,
                 ExpiresAt = accessToken.ExpiresAt
             };

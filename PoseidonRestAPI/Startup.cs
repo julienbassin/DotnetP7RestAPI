@@ -49,6 +49,7 @@ namespace PoseidonRestAPI
             services.AddTransient<IRuleService, RuleService>();
             services.AddTransient<ITradeService, TradeService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IJWTTokenRepository, JWTTokenRepository>();
 
         }
 
