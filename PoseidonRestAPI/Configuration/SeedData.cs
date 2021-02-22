@@ -139,6 +139,58 @@ namespace PoseidonRestAPI.Configuration
                                 }
                             );
                         }
+
+                        if (! context.Rules.Any())
+                        {
+                            context.Rules.AddRange(
+                                
+                                new Rule
+                                {
+                                    Name = "this a test rule",
+                                    Description = "djjsdpo",
+                                    Template = "hdshljsq",
+                                },
+                                new Rule
+                                {
+                                    Name = "this a test rule1",
+                                    Description = "djjsdpo",
+                                    Template = "hdshljsq",
+                                },
+                                new Rule
+                                {
+                                    Name = "this a test rule2",
+                                    Description = "djjsdpo",
+                                    Template = "hdshljsq",
+                                }
+
+                            );
+                        }
+
+                        if (! context.Trades.Any())
+                        {
+                            context.Trades.AddRange(
+                                
+                                new Trade
+                                {
+                                    Account = dummyTester.UserName,
+                                    BuyPrice = 5,
+                                    BuyQuantity = 5
+                                },
+                                new Trade
+                                {
+                                    Account = dummyUser.UserName,
+                                    BuyPrice = 10,
+                                    BuyQuantity = 10
+                                },
+                                new Trade
+                                {
+                                    Account = dummyAdmin.UserName,
+                                    BuyPrice = 15,
+                                    BuyQuantity = 15
+                                }
+
+                            );
+                        }
                     }
 
                 }
