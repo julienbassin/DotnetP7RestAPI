@@ -92,6 +92,55 @@ namespace PoseidonRestAPI.Configuration
                     }
 
 
+                    if (!context.CurvePoints.Any())
+                    {
+                        context.CurvePoints.AddRange(
+                            new CurvePoint
+                            {
+                                CurveId = 1,
+                                Term = 1,
+                                Value = 10
+                            },
+                            new CurvePoint
+                            {
+                                CurveId = 2,
+                                Term = 2,
+                                Value = 20
+                            },
+                            new CurvePoint
+                            {
+                                CurveId = 3,
+                                Term = 3,
+                                Value = 30
+                            }
+                        );
+
+                        if (! context.Ratings.Any())
+                        {
+                            context.Ratings.AddRange(
+                                new Rating
+                                {
+                                     MoodysRating = "azez",
+                                     FitchRating = "chjhdd",
+                                     SandPRating = "shdh"
+                                },
+
+                                new Rating
+                                {
+                                    MoodysRating = "gkeeoe",
+                                    FitchRating = "azzdd",
+                                    SandPRating = "retr"
+                                },
+                                new Rating
+                                {
+                                    MoodysRating = "jemlkop",
+                                    FitchRating = "zaeer",
+                                    SandPRating = "shfgfddh"
+                                }
+                            );
+                        }
+                    }
+
                 }
             }
             catch (Exception)
