@@ -9,5 +9,6 @@ namespace PoseidonRestAPI.Repositories
 {
     public interface IBidListRepository : IGenericRepository<BidList> 
     {
+        void Update(int Id, BidList entity);
     }
 }

@@ -7,14 +7,14 @@ namespace PoseidonRestAPI.Repositories
     {
         public BidListRepository(LocalDbContext context) : base(context) { }
 
-        //public override void Update(int Id, BidList entity)
-        //{
-        //    var _UpdatedBidRepo = _context.BidList.Find(Id);
-        //    if (_UpdatedBidRepo != null && entity != null)
-        //    {
-        //        _UpdatedBidRepo.Account = entity.Account;
-        //        _context.BidList.Update(_UpdatedBidRepo);
-        //    }
-        //}
+        public void Update(int Id, BidList entity)
+        {
+            var _UpdatedBidRepo = _context.BidList.Find(Id);
+            if (_UpdatedBidRepo != null && entity != null)
+            {
+                _UpdatedBidRepo.Account = entity.Account;
+                _context.BidList.Update(_UpdatedBidRepo);
+            }
+        }
     }
 }

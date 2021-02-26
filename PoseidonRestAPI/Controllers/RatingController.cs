@@ -61,6 +61,21 @@ namespace PoseidonRestAPI.Controllers
 
         }
 
+        [HttpPut("{ratingId}")]
+        public void Update(int ratingId, [FromBody] EditRatingDTO ratingDTO)
+        {
+            try
+            {
+                _ratingService.Update(ratingId, ratingDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
+        }
+
         [HttpDelete]
         [Route("{Id}")]
         public IActionResult Delete(int Id)

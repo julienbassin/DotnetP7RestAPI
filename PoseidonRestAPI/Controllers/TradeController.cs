@@ -61,6 +61,21 @@ namespace PoseidonRestAPI.Controllers
 
         }
 
+        [HttpPut("{tradeId}")]
+        public void Update(int tradeId, [FromBody] EditTradeDTO tradeDTO)
+        {
+            try
+            {
+                _tradeService.Update(tradeId, tradeDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
+        }
+
         [HttpDelete]
         [Route("{Id}")]
         public IActionResult Delete(int Id)

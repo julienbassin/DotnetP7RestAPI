@@ -61,6 +61,21 @@ namespace PoseidonRestAPI.Controllers
 
         }
 
+        [HttpPut("{ruleId}")]
+        public void Update(int ruleId, [FromBody] EditRuleDTO ruleDTO)
+        {
+            try
+            {
+                _ruleService.Update(ruleId, ruleDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
+        }
+
         [HttpDelete]
         [Route("{Id}")]
         public IActionResult Delete(int Id)

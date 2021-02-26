@@ -61,6 +61,21 @@ namespace PoseidonRestAPI.Controllers
 
         }
 
+        [HttpPut("{bidlistId}")]
+        public void Update(int bidlistId, [FromBody] EditBidListDTO editBidListDTO)
+        {
+            try
+            {
+                _bidService.Update(bidlistId, editBidListDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
+        }
+
         [HttpDelete]
         [Route("{Id}")]
         public void Delete(int Id)

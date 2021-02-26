@@ -61,6 +61,21 @@ namespace PoseidonRestAPI.Controllers
 
         }
 
+        [HttpPut("{userId}")]
+        public void Update(int userId, [FromBody] EditUserDTO userDTO)
+        {
+            try
+            {
+                _userService.UpdateUser(userId, userDTO);
+            }
+            catch (Exception)
+            {
+                // Implement logging MS 
+                //throw StatusCode(500, "Internal server error");
+            }
+
+        }
+
         [HttpDelete]
         [Route("{userId}")]
         public IActionResult Delete(int userId)
