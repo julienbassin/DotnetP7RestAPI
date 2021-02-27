@@ -64,7 +64,7 @@ namespace PoseidonRestAPI.Services
             var updateRating = _ratingRepository.FindById(Id);
             if (updateRating != null && editRatingDTO != null)
             {
-                //_bidListRepository.Update(Id, updateBidList);
+                _ratingRepository.Update(Id, _mapper.Map(editRatingDTO, updateRating));
             }
         }
 

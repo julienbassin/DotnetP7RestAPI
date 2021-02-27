@@ -21,7 +21,9 @@ namespace PoseidonRestAPI.Repositories
                 currentuser.FullName = user.FullName;
                 currentuser.UserName = user.UserName;
                 currentuser.Password = user.Password;
-                currentuser.Role = user.Role;                
+                currentuser.Role = user.Role;
+                _context.Users.Update(currentuser);
+                _context.SaveChanges();
             }
 
         }

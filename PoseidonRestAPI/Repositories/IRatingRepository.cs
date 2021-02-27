@@ -8,5 +8,6 @@ namespace PoseidonRestAPI.Repositories
 {
     public interface IRatingRepository : IGenericRepository<Rating>
     {
+        void Update(int Id, Rating entity);
     }
 }

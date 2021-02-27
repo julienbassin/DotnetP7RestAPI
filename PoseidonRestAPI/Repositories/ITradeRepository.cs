@@ -8,6 +8,6 @@ namespace PoseidonRestAPI.Repositories
 {
     public interface ITradeRepository : IGenericRepository<Trade>
     {
-        
+        void Update(int Id, Trade entity);
     }
 }

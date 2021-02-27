@@ -8,6 +8,6 @@ namespace PoseidonRestAPI.Repositories
 {
     public interface IRuleRepository : IGenericRepository<Rule>
     {
-        
+        void Update(int Id, Rule entity);
     }
 }

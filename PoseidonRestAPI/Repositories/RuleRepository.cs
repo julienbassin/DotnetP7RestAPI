@@ -13,6 +13,18 @@ namespace PoseidonRestAPI.Repositories
     {
         public RuleRepository(LocalDbContext context) : base(context) { }
 
-       
+        public void Update(int Id, Rule entity)
+        {
+            var updatedRule = _context.Rules.Find(Id);
+            if (updatedRule != null && entity != null)
+            {
+                updatedRule.Name = entity.Name;
+                updatedRule.Description = entity.Description;
+                updatedRule.Json = entity.Json;
+                _context.Rules.Update(entity);
+                _context.SaveChanges();
+            }
+        }
+
     }
 }

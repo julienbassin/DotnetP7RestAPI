@@ -66,6 +66,7 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
+                
                 _ruleService.Update(ruleId, ruleDTO);
             }
             catch (Exception)

@@ -13,7 +13,10 @@ namespace PoseidonRestAPI.Repositories
             if (_UpdatedBidRepo != null && entity != null)
             {
                 _UpdatedBidRepo.Account = entity.Account;
+                _UpdatedBidRepo.BidQuantity = entity.BidQuantity;
+                _UpdatedBidRepo.Type = entity.Type;
                 _context.BidList.Update(_UpdatedBidRepo);
+                _context.SaveChanges();
             }
         }
     }

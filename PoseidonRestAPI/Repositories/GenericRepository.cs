@@ -48,7 +48,7 @@ namespace PoseidonRestAPI.Repositories
             _context.SaveChanges();
         }
 
-        public virtual void Update(TEntity entity)
+        public void Update(TEntity entity)
         {
             if (entity == null)
             {
@@ -57,12 +57,13 @@ namespace PoseidonRestAPI.Repositories
             _context.SaveChanges();
         }
 
-        public virtual void Delete(int Id)
+        public void Delete(int Id)
         {
             var entity = _context.Set<TEntity>().Find(Id);
             if (entity != null)
             {
                 _context.Set<TEntity>().Remove(entity);
+                _context.SaveChanges();
             }
         }
     }

@@ -64,7 +64,7 @@ namespace PoseidonRestAPI.Services
             var updateTrade = _tradeRepository.FindById(Id);
             if (updateTrade != null && editTradeDTO != null)
             {
-                //_bidListRepository.Update(Id, updateBidList);
+                _tradeRepository.Update(Id, _mapper.Map(editTradeDTO, updateTrade));
             }
         }
 

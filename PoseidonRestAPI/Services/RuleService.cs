@@ -64,7 +64,7 @@ namespace PoseidonRestAPI.Services
             var updateRule = _ruleRepository.FindById(Id);
             if (updateRule != null && editRuleDTO != null)
             {
-                //_bidListRepository.Update(Id, updateBidList);
+                _ruleRepository.Update(Id, _mapper.Map(editRuleDTO, updateRule));
             }
         }
 

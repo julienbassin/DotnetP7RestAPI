@@ -192,9 +192,9 @@ namespace PoseidonRestAPI.Configuration
                             );
                         }
 
-                        context.SaveChanges();
+                        
                     }
-
+                    context.SaveChanges();
                 }
             }
             catch (Exception ex)

@@ -64,7 +64,7 @@ namespace PoseidonRestAPI.Services
             var updateBidList = _bidListRepository.FindById(Id);
             if(updateBidList != null && editBidListDTO != null)
             {                
-                _bidListRepository.Update(Id, updateBidList);
+                _bidListRepository.Update(Id, _mapper.Map(editBidListDTO, updateBidList));
             }
         }
 
