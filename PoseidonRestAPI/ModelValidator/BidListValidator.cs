@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.ModelValidator
 {
-    public class BidListValidator : ValidatorBase<BidListDTO>
+    public class BidListValidator : ValidatorBase<EditBidListDTO>
     {
         public BidListValidator()
         {
-            RuleFor(bl => bl.Account) .NotEmpty()
+            RuleFor(bl => bl.Account).NotEmpty()
                                      .MaximumLength(10);
 
             RuleFor(bl => bl.BidQuantity).NotEmpty();

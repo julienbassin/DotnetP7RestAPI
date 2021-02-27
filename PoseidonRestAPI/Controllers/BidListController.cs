@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.ModelValidator;
 using PoseidonRestAPI.Resources;
 using PoseidonRestAPI.Services;
 
@@ -49,6 +50,7 @@ namespace PoseidonRestAPI.Controllers
         [HttpPost]
         public void Create([FromBody] EditBidListDTO bidList)
         {
+            
             try
             {
                 _bidService.Add(bidList);
