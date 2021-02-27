@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.ModelValidator
 {
-    public class TradeValidator : AbstractValidator<Trade>
+    public class TradeValidator : ValidatorBase<Trade>
     {
 
     }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PoseidonRestAPI.ModelValidator
 {
-    public class CurvePointValidator : AbstractValidator<CurvePoint>
+    public class CurvePointValidator : ValidatorBase<CurvePoint>
     {
     }
 }
