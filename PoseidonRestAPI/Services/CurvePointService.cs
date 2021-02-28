@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.ModelValidator;
 using PoseidonRestAPI.Repositories;
 using PoseidonRestAPI.Resources;
 using System;
@@ -37,6 +38,30 @@ namespace PoseidonRestAPI.Services
             return _mapper.Map<CurvePointDTO>(_curvepoint);
         }
 
+        public ValidationResult ValidateResource(EditCurvePointDTO editCurvePointDTO)
+        {
+            var result = new ValidationResult();
+            if (editCurvePointDTO != null)
+            {
+                var validator = new CurvePointValidator();
+                var vr = validator.Validate(editCurvePointDTO);
+                if (vr.IsValid)
+                {
+                    result.IsValid = true;
+                    return result;
+                }
+
+                if (vr.Errors.Any())
+                {
+                    foreach (var error in vr.Errors)
+                    {
+                        result.ErrorMessages.Add(error.PropertyName, error.ErrorMessage);
+                    }
+                }
+            }
+
+            return result;
+        }
 
         public CurvePointDTO Add(EditCurvePointDTO editCurvePointDTO)
         {

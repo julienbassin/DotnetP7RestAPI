@@ -51,7 +51,17 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                _curvePointService.Add(curvePoint);
+                var result = _curvePointService.ValidateResource(curvePoint);
+                if (!result.IsValid)
+                {
+
+                }
+
+                if (result.IsValid)
+                {
+                    _curvePointService.Add(curvePoint);
+                }
+                
             }
             catch (Exception)
             {
@@ -66,7 +76,16 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                _curvePointService.Update(curvePointId, curvePoint);
+                var result = _curvePointService.ValidateResource(curvePoint);
+                if (!result.IsValid)
+                {
+
+                }
+                if (result.IsValid)
+                {
+                    _curvePointService.Update(curvePointId, curvePoint);
+                }
+                
             }
             catch (Exception)
             {

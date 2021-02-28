@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PoseidonRestAPI.Domain;
+using PoseidonRestAPI.ModelValidator;
 using PoseidonRestAPI.Repositories;
 using PoseidonRestAPI.Resources;
 using System;
@@ -36,6 +37,31 @@ namespace PoseidonRestAPI.Services
         {
             var _rule = _ruleRepository.FindById(Id);
             return _mapper.Map<RuleDTO>(_rule);
+        }
+
+        public ValidationResult ValidateResource(EditRuleDTO editRuleDTO)
+        {
+            var result = new ValidationResult();
+            if (editRuleDTO != null)
+            {
+                var validator = new RuleValidator();
+                var vr = validator.Validate(editRuleDTO);
+                if (vr.IsValid)
+                {
+                    result.IsValid = true;
+                    return result;
+                }
+
+                if (vr.Errors.Any())
+                {
+                    foreach (var error in vr.Errors)
+                    {
+                        result.ErrorMessages.Add(error.PropertyName, error.ErrorMessage);
+                    }
+                }
+            }
+
+            return result;
         }
 
         // add 

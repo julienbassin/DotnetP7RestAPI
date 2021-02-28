@@ -1,4 +1,5 @@
-﻿using PoseidonRestAPI.Resources;
+﻿using PoseidonRestAPI.ModelValidator;
+using PoseidonRestAPI.Resources;
 
 namespace PoseidonRestAPI.Services
 {
@@ -8,6 +9,7 @@ namespace PoseidonRestAPI.Services
         void Delete(int Id);
         RuleDTO[] FindAll();
         RuleDTO FindById(int Id);
+        ValidationResult ValidateResource(EditRuleDTO editRuleDTO);
         void Update(int Id, EditRuleDTO editRuleDTO);
     }
 }

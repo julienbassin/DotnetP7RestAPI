@@ -53,7 +53,17 @@ namespace PoseidonRestAPI.Controllers
             
             try
             {
-                _bidService.Add(bidList);
+                var result = _bidService.ValidateResource(bidList);
+                if (!result.IsValid)
+                {
+                        
+                }
+
+                if (result.IsValid)
+                {
+                    _bidService.Add(bidList);
+                }
+                
             }
             catch (Exception)
             {
@@ -64,11 +74,12 @@ namespace PoseidonRestAPI.Controllers
         }
 
         [HttpPut("{bidlistId}")]
-        public void Update(int bidlistId, [FromBody] EditBidListDTO editBidListDTO)
+        public IActionResult Update(int bidlistId, [FromBody] EditBidListDTO editBidListDTO)
         {
             try
             {
                 _bidService.Update(bidlistId, editBidListDTO);
+                return Ok();
             }
             catch (Exception)
             {
@@ -76,13 +87,15 @@ namespace PoseidonRestAPI.Controllers
                 //throw StatusCode(500, "Internal server error");
             }
 
+            return ValidationProblem();
         }
 
         [HttpDelete]
         [Route("{Id}")]
-        public void Delete(int Id)
+        public IActionResult Delete(int Id)
         {
             _bidService.Delete(Id);
+            return Ok();
         }
     }
 }

@@ -51,7 +51,17 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                _tradeService.Add(tradeDTO);
+                var result = _tradeService.ValidateResource(tradeDTO);
+                if (!result.IsValid)
+                {
+
+                }
+
+                if (result.IsValid)
+                {
+                    _tradeService.Add(tradeDTO);
+                }
+                
             }
             catch (Exception)
             {

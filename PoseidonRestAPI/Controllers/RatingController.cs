@@ -51,7 +51,17 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                _ratingService.Add(ratingDTO);
+                var result = _ratingService.ValidateResource(ratingDTO);
+                if (!result.IsValid)
+                {
+
+                }
+
+                if (result.IsValid)
+                {
+                    _ratingService.Add(ratingDTO);
+                }
+                
             }
             catch (Exception)
             {
@@ -66,7 +76,16 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                _ratingService.Update(ratingId, ratingDTO);
+                var result = _ratingService.ValidateResource(ratingDTO);
+                if (!result.IsValid)
+                {
+
+                }
+
+                if (result.IsValid)
+                {
+                    _ratingService.Update(ratingId, ratingDTO);
+                }                
             }
             catch (Exception)
             {

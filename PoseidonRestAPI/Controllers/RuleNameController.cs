@@ -51,7 +51,17 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
-                _ruleService.Add(editRuleDTO);
+                var result = _ruleService.ValidateResource(editRuleDTO);
+                if (!result.IsValid)
+                {
+
+                }
+
+                if (result.IsValid)
+                {
+                    _ruleService.Add(editRuleDTO);
+                }
+                
             }
             catch (Exception)
             {
@@ -66,8 +76,17 @@ namespace PoseidonRestAPI.Controllers
         {
             try
             {
+                var result = _ruleService.ValidateResource(ruleDTO);
+                if (!result.IsValid)
+                {
+
+                }
+
+                if (result.IsValid)
+                {
+                    _ruleService.Update(ruleId, ruleDTO);
+                }
                 
-                _ruleService.Update(ruleId, ruleDTO);
             }
             catch (Exception)
             {
